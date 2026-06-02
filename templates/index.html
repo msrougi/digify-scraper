@@ -1,194 +1,231 @@
 {% extends "base.html" %}
 {% block title %}Digify Scrapper — Baixe Todas as Imagens de Qualquer Site Grátis{% endblock %}
+{% block canonical %}<link rel="canonical" href="https://imagescrapper.digify.live/">{% endblock %}
 {% block meta %}
 <meta name="description" content="Ferramenta gratuita para baixar todas as imagens de qualquer site em um clique. Image scraper online, extrator de imagens, download em massa de fotos.">
 <meta name="keywords" content="image scraper, baixar imagens de site, download imagens site, extrair imagens site, bulk image downloader">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
-<link rel="canonical" href="https://imagescrapper.digify.live/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://imagescrapper.digify.live/">
 <meta property="og:title" content="Digify Scrapper — Baixe Todas as Imagens de Qualquer Site">
 <meta property="og:description" content="Ferramenta gratuita para baixar todas as imagens de qualquer site em um clique.">
 <meta property="og:site_name" content="Digify Scrapper">
-<meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"Digify Scrapper","url":"https://imagescrapper.digify.live/","description":"Ferramenta gratuita para baixar todas as imagens de qualquer site.","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"BRL"},"isAccessibleForFree":true}
 </script>
 {% endblock %}
 {% block extra_style %}
 <style>
-<style>
-.hdr{display:flex;align-items:center;gap:18px;margin-bottom:24px;width:100%;max-width:700px}
-.hdr h1{font-size:26px;font-weight:800;color:var(--fg);letter-spacing:2px}
-.hdr p{font-size:11px;color:var(--dim);letter-spacing:3px;text-transform:uppercase;margin-top:3px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px 24px;width:100%;max-width:700px;margin-bottom:14px}
-.sec{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:16px;font-weight:600}
-label{display:block;font-size:11px;color:var(--dim);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px}
-input,select{width:100%;background:var(--card2);border:1px solid var(--border);border-radius:7px;color:var(--fg);padding:9px 12px;font-size:14px;outline:none;font-family:inherit;transition:border-color .18s}
-input:focus,select:focus{border-color:var(--gold)}
-select option{background:#fff}
+.tool-wrap{width:100%;max-width:680px;margin:0 auto;padding:0 16px 40px}
+.logo-wrap{text-align:center;margin:20px 0 8px}
+.logo-wrap img{width:150px;max-width:100%}
+.tool-title{text-align:left;margin-bottom:20px}
+.tool-title h1{font-size:28px;font-weight:800;color:var(--purple);letter-spacing:1px}
+.tool-title p{font-size:11px;color:var(--dim);letter-spacing:3px;text-transform:uppercase;margin-top:3px}
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px;box-shadow:0 2px 12px rgba(56,14,118,.07)}
+.sec{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--purple);margin-bottom:16px;font-weight:700;text-align:center}
+label{display:block;font-size:11px;color:#888;margin-bottom:5px;text-transform:uppercase;letter-spacing:1px}
+input[type=url],input[type=number],select{width:100%;background:var(--card2);border:1px solid var(--border);border-radius:7px;color:var(--fg);padding:9px 12px;font-size:14px;outline:none;font-family:inherit;transition:border-color .18s;-webkit-appearance:none}
+input:focus,select:focus{border-color:var(--purple)}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:0}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:0}
 .mb{margin-bottom:12px}
-/* botões */
-.btn{border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;padding:11px 20px;font-family:inherit;letter-spacing:.4px;transition:opacity .15s,filter .15s}
-.btn:disabled{opacity:.3;cursor:not-allowed;filter:grayscale(.5)}
-.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#ffffff;width:100%;padding:14px;font-size:15px}
-.btn-gold:not(:disabled):hover{opacity:.85}
-.btn-zip{background:linear-gradient(135deg,#2a9a62,#1a7a48);color:#ffffff;width:100%;padding:14px;font-size:15px;border:1px solid #2a7a4a}
-.btn-zip:not(:disabled):hover{opacity:.85}
-.btn-zip:disabled{opacity:1;filter:none;background:#c8c0d8;color:#a898c8;border:1px solid #b0a8c8;cursor:not-allowed}
-.btn-stop{background:#fce8e8;color:var(--red);border:1px solid #3a1515;flex:1}
-.btn-stop:not(:disabled):hover{background:#f8d8d8}
-.btn-new{background:var(--card2);color:var(--dim);border:1px solid var(--border);background:#f0eef8}
-.btn-new:hover{color:var(--fg)}
-.btn-retry{background:#ede8f8;color:var(--gold);border:1px solid #2a1050;flex:1}
-.btn-retry:not(:disabled):hover{background:#e0d8f4}
-.row{display:flex;gap:10px;margin-top:12px;align-items:center}
-/* stats */
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.btn-start{display:block;width:100%;padding:14px;background:linear-gradient(135deg,var(--purple),#6a2aaa);color:#fff;border:none;border-radius:9px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:.5px;margin-top:16px;transition:opacity .15s}
+.btn-start:hover{opacity:.88}
+/* STATS */
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px}
 .stat{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:14px 8px;text-align:center}
 .sn{font-size:34px;font-weight:800;line-height:1}
-.sl{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:4px}
-/* progress */
+.sl{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#999;margin-top:4px}
+.ok{color:var(--green)}.er{color:var(--red)}.nf{color:var(--purple)}
+/* PROGRESS */
 .pb-bg{background:var(--card2);border-radius:99px;height:7px;overflow:hidden;margin-bottom:5px}
-.pb{height:100%;background:linear-gradient(90deg,var(--gold),var(--green));border-radius:99px;width:0;transition:width .3s}
-.pb-row{display:flex;justify-content:space-between;font-size:11px;color:var(--dim);margin-bottom:14px}
-/* log */
+.pb{height:100%;background:linear-gradient(90deg,var(--purple),var(--green));border-radius:99px;width:0;transition:width .3s}
+.pb-row{display:flex;justify-content:space-between;font-size:11px;color:#999;margin-bottom:14px}
+/* LOG */
 .log{background:#faf9ff;border:1px solid var(--border);border-radius:8px;height:200px;overflow-y:auto;padding:10px 12px;font-family:'Courier New',monospace;font-size:11.5px;line-height:1.8}
 .log::-webkit-scrollbar{width:4px}
-.log::-webkit-scrollbar-thumb{background:#c0b0e0;border-radius:9px}
-.ok{color:var(--green)}.er{color:var(--red)}.nf{color:var(--gold)}.dm{color:#6a5a8a}
-/* badge */
+.log::-webkit-scrollbar-thumb{background:#d0c8e8;border-radius:9px}
+.ok-log{color:var(--green)}.er-log{color:var(--red)}.nf-log{color:var(--purple)}.dm{color:#aaa}
+/* BUTTONS ROW */
+.btn-row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.btn-stop{flex:1;padding:11px;background:#fce8e8;color:var(--red);border:1px solid #f0c0c0;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+.btn-stop:disabled{opacity:.35;cursor:not-allowed}
+.btn-stop:not(:disabled):hover{background:#f8d0d0}
+.btn-retry{flex:1;padding:11px;background:var(--card2);color:var(--purple);border:1px solid var(--border);border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+.btn-retry:hover{background:#e8e0f8}
+.btn-new{padding:11px 16px;background:var(--card2);color:#888;border:1px solid var(--border);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;margin-left:auto}
+.btn-new:hover{color:var(--fg)}
+/* ZIP BUTTON */
+.btn-zip{display:block;width:100%;padding:14px;background:linear-gradient(135deg,#2a7a48,#1a5a32);color:#fff;border:none;border-radius:9px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;margin-top:14px;transition:opacity .15s}
+.btn-zip:not(:disabled):hover{opacity:.88}
+.btn-zip:disabled{background:#c8c0d8;color:#a898c8;cursor:not-allowed;opacity:1}
+.zip-info{font-size:11px;color:#999;text-align:center;margin-top:6px;min-height:16px}
+/* BADGE */
 .badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;vertical-align:middle;margin-left:6px}
-.b-run{background:#e8f5ee;color:var(--green);border:1px solid #1a4a2a}
-.b-done{background:#eef0ff;color:#8899ff;border:1px solid #1a1a4a}
-.b-stop{background:#fde8e8;color:var(--red);border:1px solid #4a1a1a}
-.zip-info{font-size:11px;color:var(--dim);text-align:center;margin-top:8px;min-height:16px}
-
-
+.b-run{background:#e8f5ee;color:var(--green);border:1px solid #b0dcc0}
+.b-done{background:#eef0ff;color:#5566cc;border:1px solid #c0c8ee}
+.b-stop{background:#fde8e8;color:var(--red);border:1px solid #f0c0c0}
+/* SEO SECTION */
+.seo-section{width:100%;max-width:680px;margin:0 auto 0;padding:0 16px}
+.seo-box{background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px;box-shadow:0 2px 12px rgba(56,14,118,.07)}
+.seo-box h2{font-size:15px;color:var(--purple);margin-bottom:12px;font-weight:700}
+.seo-box p{font-size:13px;color:var(--fg);line-height:1.8;margin-bottom:8px}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.feat{background:var(--card2);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--fg);line-height:1.6}
+.feat strong{color:var(--purple);display:block;margin-bottom:3px}
+.faq{margin-top:8px}
+.faq details{border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;background:var(--card2)}
+.faq summary{font-size:13px;color:var(--purple);cursor:pointer;font-weight:600;list-style:none}
+.faq summary::before{content:"► ";font-size:11px}
+.faq details[open] summary::before{content:"▼ "}
+.faq p{font-size:13px;color:var(--fg);line-height:1.7;margin-top:10px}
+.kw-bar{font-size:11px;color:#aaa;text-align:center;padding:12px 0;border-top:1px solid var(--border);margin-top:12px}
+.kw-bar a{color:#bbb;text-decoration:none}
 @media(max-width:640px){
-  .hdr{margin-bottom:16px}
-  .card{padding:16px;margin-bottom:10px}
   .g2{grid-template-columns:1fr}
   .g4{grid-template-columns:1fr 1fr}
-  .stats{gap:8px}
-  .stat-n{font-size:26px}
-  .log-wrap{height:160px}
-  .btn-row{flex-wrap:wrap}
-  .btn-row .btn{width:100%}
+  .stats{gap:8px}.sn{font-size:26px}
+  .btn-row{flex-direction:column}
+  .btn-new{margin-left:0}
+  .feat-grid{grid-template-columns:1fr}
 }
 </style>
 {% endblock %}
 {% block content %}
 
-
-<!-- LOGO DIGIFY -->
-<div style="width:100%;max-width:700px;text-align:center;margin-bottom:20px">
-  <img src="data:image/webp;base64,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" alt="Digify" style="width:150px;max-width:100%">
+<!-- LOGO -->
+<div class="logo-wrap">
+  <img src="data:image/png;base64,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" alt="Digify — Image Scraper">
 </div>
 
-<!-- HEADER -->
-<div class="hdr">
-  <div>
+<div class="tool-wrap">
+  <div class="tool-title">
     <h1>Digify Scrapper</h1>
     <p>Image Scraper</p>
   </div>
-</div>
 
-<!-- FORM -->
-<div class="card" id="v-form">
-  <div class="sec" style="text-align:center">BAIXE TODAS AS IMAGENS DE QUALQUER SITE</div>
-  <div class="mb">
-    <label>URL do site</label>
-    <input id="i-url" type="url" placeholder="https://exemplo.com">
-  </div>
-  <div class="g2">
-    <div><label>Profundidade</label>
-      <select id="i-depth">
-        <option value="1">1 — só a home</option>
-        <option value="2" selected>2 — recomendado</option>
-        <option value="3">3 — completo</option>
-        <option value="4">4 — site grande</option>
-      </select>
+  <!-- FORM -->
+  <div class="card" id="v-form">
+    <div class="sec">BAIXE TODAS AS IMAGENS DE QUALQUER SITE</div>
+    <div class="mb">
+      <label>URL do site</label>
+      <input id="i-url" type="url" placeholder="https://exemplo.com" autocomplete="off">
     </div>
-    <div><label>Domínio</label>
-      <select id="i-domain">
-        <option value="same" selected>Apenas domínio principal</option>
-        <option value="all">Seguir links externos</option>
-      </select>
+    <div class="g2">
+      <div>
+        <label>Profundidade</label>
+        <select id="i-depth">
+          <option value="1">1 — só a home</option>
+          <option value="2" selected>2 — recomendado</option>
+          <option value="3">3 — completo</option>
+          <option value="4">4 — site grande</option>
+        </select>
+      </div>
+      <div>
+        <label>Domínio</label>
+        <select id="i-domain">
+          <option value="same" selected>Apenas domínio principal</option>
+          <option value="all">Seguir links externos</option>
+        </select>
+      </div>
+    </div>
+    <div class="g4">
+      <div><label>Threads</label><input id="i-threads" type="number" value="4" min="1" max="10"></div>
+      <div><label>Pausa (s)</label><input id="i-delay" type="number" value="0.5" min="0" step="0.1"></div>
+      <div><label>Retentativas</label><input id="i-retries" type="number" value="3" min="0" max="10"></div>
+      <div><label>Mín. bytes</label><input id="i-minsize" type="number" value="1024" min="0"></div>
+    </div>
+    <button class="btn-start" onclick="startScrape()">⬇  Iniciar Scraping</button>
+  </div>
+
+  <!-- PROGRESSO -->
+  <div class="card" id="v-run" style="display:none">
+    <div class="sec">Progresso <span class="badge b-run" id="badge">varrendo</span></div>
+    <div class="stats">
+      <div class="stat"><div class="sn ok" id="n-ok">0</div><div class="sl">Coletadas</div></div>
+      <div class="stat"><div class="sn er" id="n-er">0</div><div class="sl">Falhas</div></div>
+      <div class="stat"><div class="sn nf" id="n-tot">0</div><div class="sl">Encontradas</div></div>
+    </div>
+    <div class="pb-bg"><div class="pb" id="pb"></div></div>
+    <div class="pb-row"><span id="pb-lbl">0%</span><span id="pb-detail"></span></div>
+    <div class="log" id="log"></div>
+    <div class="btn-row">
+      <button class="btn-stop" id="btn-stop" onclick="stopScrape()">■  Parar</button>
+      <button class="btn-retry" id="btn-retry" onclick="retryFailed()" style="display:none">↺  Falhas (<span id="n-retry">0</span>)</button>
+      <button class="btn-new" onclick="resetApp()">← Novo</button>
+    </div>
+    <button class="btn-zip" id="btn-zip" onclick="downloadZip()" disabled>📦  Baixar ZIP com todas as imagens</button>
+    <div class="zip-info" id="zip-info">Aguardando conclusão do scraping…</div>
+  </div>
+
+</div>
+
+<!-- SEO CONTENT -->
+<div class="seo-section">
+  <div class="seo-box">
+    <h2>🖼️ O que o Digify Scrapper faz</h2>
+    <p>Varre automaticamente todas as páginas do site informado, extrai as URLs de imagens (<strong>JPG, PNG, GIF, WEBP, SVG, AVIF, BMP, ICO</strong>) e baixa tudo em um único arquivo ZIP — sem instalar nada.</p>
+    <div class="feat-grid">
+      <div class="feat"><strong>⬇ Download em massa</strong>Baixe centenas de imagens de sites em um clique</div>
+      <div class="feat"><strong>🏪 Extração de lojas virtuais</strong>Fotos de produtos de e-commerces e WooCommerce</div>
+      <div class="feat"><strong>💾 Backup de blogs</strong>Salve todas as imagens antes de migrar o site</div>
+      <div class="feat"><strong>🤖 Web scraping automatizado</strong>Crawling inteligente com controle de profundidade</div>
     </div>
   </div>
-  <div class="g4" style="margin-top:12px">
-    <div><label>Threads</label><input id="i-threads" type="number" value="4" min="1" max="10"></div>
-    <div><label>Pausa (s)</label><input id="i-delay" type="number" value="0.5" min="0" step="0.1"></div>
-    <div><label>Retentativas</label><input id="i-retries" type="number" value="3" min="0" max="10"></div>
-    <div><label>Mín. bytes</label><input id="i-minsize" type="number" value="1024" min="0"></div>
-  </div>
-  <div style="margin-top:14px">
-    <button class="btn btn-gold" onclick="startScrape()">⬇  Iniciar Scraping</button>
-  </div>
-</div>
 
-<!-- PROGRESSO -->
-<div class="card" id="v-run" style="display:none">
-  <div class="sec">Progresso <span class="badge b-run" id="badge">varrendo</span></div>
-
-  <div class="stats">
-    <div class="stat"><div class="sn ok"  id="n-ok">0</div><div class="sl">Coletadas</div></div>
-    <div class="stat"><div class="sn er"  id="n-er">0</div><div class="sl">Falhas</div></div>
-    <div class="stat"><div class="sn nf"  id="n-tot">0</div><div class="sl">Encontradas</div></div>
-  </div>
-
-  <div class="pb-bg"><div class="pb" id="pb"></div></div>
-  <div class="pb-row"><span id="pb-lbl">0%</span><span id="pb-detail"></span></div>
-
-  <div class="log" id="log"></div>
-
-  <div class="row">
-    <button class="btn btn-stop"  id="btn-stop"  onclick="stopScrape()">■  Parar</button>
-    <button class="btn btn-retry" id="btn-retry" onclick="retryFailed()" style="display:none">↺  Tentar falhas (<span id="n-retry">0</span>)</button>
-    <button class="btn btn-new"   onclick="resetApp()" style="padding:11px 16px">← Novo</button>
+  <div class="seo-box">
+    <h2>❓ Perguntas frequentes</h2>
+    <div class="faq">
+      <details><summary>Como baixar todas as imagens de um site de uma vez?</summary>
+        <p>Cole a URL do site, escolha a profundidade de varredura e clique em <strong>Iniciar Scraping</strong>. O Digify Scrapper percorre automaticamente todas as páginas e compila as imagens em um ZIP para download.</p>
+      </details>
+      <details><summary>O que é image scraping e para que serve?</summary>
+        <p>Image scraping é a extração automática de imagens de páginas da web. Usado para backup de conteúdo, coleta de dados visuais, análise de concorrência e arquivamento de mídias.</p>
+      </details>
+      <details><summary>Quais formatos de imagem são suportados?</summary>
+        <p>JPG, JPEG, PNG, GIF, WEBP, SVG, AVIF, BMP, ICO, TIFF e JFIF. Detecta imagens em &lt;img&gt;, srcset, data-src, lazy-load e CSS background-image.</p>
+      </details>
+      <details><summary>É gratuito? Precisa instalar algo?</summary>
+        <p>100% gratuito e online. Funciona direto no navegador — Chrome, Firefox, Safari, Edge. Não requer cadastro nem instalação.</p>
+      </details>
+    </div>
+    <div class="kw-bar">
+      <a href="/blog/como-baixar-imagens-de-sites">Baixar imagens de sites</a> · 
+      <a href="/blog/o-que-e-image-scraping">Image scraping online</a> · 
+      <a href="/blog/melhores-ferramentas-download-imagens">Bulk image downloader</a> · 
+      <a href="/blog/image-scraping-python">Download all images from website</a>
+    </div>
   </div>
 </div>
 
-<!-- BOTÃO ZIP — sempre visível abaixo, só habilita ao fim -->
-<div style="width:100%;max-width:700px">
-  <button class="btn btn-zip" id="btn-zip" onclick="downloadZip()" disabled>
-    📦  Baixar ZIP com todas as imagens
-  </button>
-  <div class="zip-info" id="zip-info">Aguardando conclusão do scraping…</div>
-</div>
-
+{% endblock %}
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
-// ══ CONFIG — troque pela URL do seu backend ══
 const BACKEND_URL = "";
-
-let stopped=false, failedUrls=[], blobs=[];
-let nOk=0, nEr=0, nTot=0;
-let eventSource=null;
-
+let stopped=false,failedUrls=[],blobs=[],nOk=0,nEr=0,nTot=0,eventSource=null;
 const $=id=>document.getElementById(id);
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 function fmt(b){return b<1048576?(b/1024).toFixed(1)+"KB":(b/1048576).toFixed(1)+"MB"}
 
 function addLog(msg,cls="dm"){
-  const d=$("log"), el=document.createElement("div");
-  el.className=cls; el.textContent=msg;
-  d.appendChild(el); d.scrollTop=d.scrollHeight;
+  const d=$("log"),el=document.createElement("div");
+  el.className=cls;el.textContent=msg;
+  d.appendChild(el);d.scrollTop=d.scrollHeight;
 }
 
 function updateStats(ok,er,tot){
   nOk=ok;nEr=er;nTot=tot;
-  $("n-ok").textContent=ok; $("n-er").textContent=er; $("n-tot").textContent=tot;
+  $("n-ok").textContent=ok;$("n-er").textContent=er;$("n-tot").textContent=tot;
   const pct=tot>0?Math.round((ok+er)/tot*100):0;
-  $("pb").style.width=pct+"%"; $("pb-lbl").textContent=pct+"%";
+  $("pb").style.width=pct+"%";$("pb-lbl").textContent=pct+"%";
   $("pb-detail").textContent=tot>0?`${ok+er} / ${tot}`:"";
   document.title=`Digify Scrapper ${pct}% — ${ok} imgs`;
 }
 
 function setBadge(txt,cls){
-  $("badge").textContent=txt; $("badge").className="badge "+cls;
+  $("badge").textContent=txt;$("badge").className="badge "+cls;
 }
 
 function toName(url,i){
@@ -200,58 +237,46 @@ function toName(url,i){
   }catch{return "img_"+i+".jpg";}
 }
 
-async function fetchBlob(url, retries=3){
+async function fetchBlob(url,retries=3){
   for(let i=0;i<=retries;i++){
     try{
-      const r = await fetch(`${BACKEND_URL}/download?url=${encodeURIComponent(url)}`,
-                            {signal:AbortSignal.timeout(20000)});
-      if(!r.ok) throw new Error("HTTP "+r.status);
-      const b = await r.blob();
+      const r=await fetch(BACKEND_URL+"/download?url="+encodeURIComponent(url),{signal:AbortSignal.timeout(20000)});
+      if(!r.ok)throw new Error("HTTP "+r.status);
+      const b=await r.blob();
       const min=parseInt($("i-minsize").value||"1024");
-      if(b.size<min) throw new Error("pequena");
+      if(b.size<min)throw new Error("pequena");
       return b;
-    }catch(e){
-      if(i<retries) await sleep(1200*(i+1));
-    }
+    }catch(e){if(i<retries)await sleep(1200*(i+1));}
   }
   return null;
 }
 
 async function downloadZip(){
-  if(!blobs.length) return;
+  if(!blobs.length)return;
   $("btn-zip").disabled=true;
   $("btn-zip").textContent="⏳  Gerando ZIP...";
   $("zip-info").textContent="Comprimindo "+blobs.length+" imagens...";
-  const zip=new JSZip();
-  const folder=zip.folder("imagens");
-  const seen=new Set();
+  const zip=new JSZip(),folder=zip.folder("imagens"),seen=new Set();
   blobs.forEach(({name,blob})=>{
-    let n=name; let c=1;
+    let n=name,c=1;
     while(seen.has(n)){const d=n.lastIndexOf(".");n=n.slice(0,d)+"_"+c+++n.slice(d);}
-    seen.add(n); folder.file(n,blob);
+    seen.add(n);folder.file(n,blob);
   });
   const content=await zip.generateAsync({type:"blob",compression:"DEFLATE",compressionOptions:{level:6}});
   const a=document.createElement("a");
-  a.href=URL.createObjectURL(content); a.download="digify_imagens.zip";
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  a.href=URL.createObjectURL(content);a.download="digify_imagens.zip";
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
   setTimeout(()=>URL.revokeObjectURL(a.href),10000);
   $("btn-zip").textContent="✔  ZIP baixado!";
   $("btn-zip").disabled=false;
   $("zip-info").textContent=blobs.length+" imagens · "+fmt(content.size);
-  addLog("✔ ZIP gerado: "+fmt(content.size)+" com "+blobs.length+" imagens","ok");
+  addLog("✔ ZIP gerado: "+fmt(content.size)+" com "+blobs.length+" imagens","ok-log");
 }
 
 async function startScrape(){
   const url=$("i-url").value.trim();
-  if(!url){alert("Informe a URL");return;}
-
-  // Verifica se backend está configurado
-  if(BACKEND_URL.includes("SEU-BACKEND")){
-    alert("Configure a URL do backend no código HTML!\nSubstitua SEU-BACKEND.up.railway.app pela sua URL.");
-    return;
-  }
-
-  stopped=false; failedUrls=[]; blobs=[];
+  if(!url){alert("Informe a URL do site");return;}
+  stopped=false;failedUrls=[];blobs=[];
   $("v-form").style.display="none";
   $("v-run").style.display="block";
   $("btn-retry").style.display="none";
@@ -260,144 +285,112 @@ async function startScrape(){
   $("btn-zip").textContent="📦  Baixar ZIP com todas as imagens";
   $("zip-info").textContent="Aguardando conclusão do scraping…";
   $("log").innerHTML="";
-  updateStats(0,0,0); setBadge("varrendo","b-run");
+  updateStats(0,0,0);setBadge("varrendo","b-run");
 
-  const depth   = parseInt($("i-depth").value);
-  const delay   = parseFloat($("i-delay").value);
-  const threads = parseInt($("i-threads").value);
-  const retries = parseInt($("i-retries").value);
-  const samedom = $("i-domain").value==="same";
+  const depth=parseInt($("i-depth").value);
+  const delay=parseFloat($("i-delay").value);
+  const threads=parseInt($("i-threads").value);
+  const retries=parseInt($("i-retries").value);
+  const samedom=$("i-domain").value==="same";
 
-  addLog("🔍 Varrendo: "+url,"nf");
+  addLog("🔍 Varrendo: "+url,"nf-log");
 
-  // SSE — recebe imagens em tempo real do backend
-  const params = new URLSearchParams({url, depth, delay, same_domain: samedom});
-  eventSource = new EventSource(`${BACKEND_URL}/scrape?${params}`);
-  const allImages = [];
+  const params=new URLSearchParams({url,depth,delay,same_domain:samedom});
+  eventSource=new EventSource(BACKEND_URL+"/scrape?"+params);
 
-  eventSource.onmessage = (e) => {
-    if(stopped){ eventSource.close(); return; }
-    const data = JSON.parse(e.data);
-
-    if(data.type === "image"){
-      allImages.push(data.url);
-      $("n-tot").textContent = data.total;
+  eventSource.onmessage=(e)=>{
+    if(stopped){eventSource.close();return;}
+    const data=JSON.parse(e.data);
+    if(data.type==="image"){
+      $("n-tot").textContent=data.total;
       addLog("🖼 "+data.url.split("/").pop().split("?")[0].slice(0,60),"dm");
-    }
-    else if(data.type === "page"){
-      addLog(`📄 [${data.depth}/${data.max_depth}] ${data.url.slice(0,70)}  → ${data.total} imgs`,"dm");
-    }
-    else if(data.type === "error"){
-      addLog("⚠ "+data.url.slice(0,50)+" — "+data.msg,"er");
-    }
-    else if(data.type === "done"){
+    } else if(data.type==="page"){
+      addLog("📄 ["+data.depth+"/"+data.max_depth+"] "+data.url.slice(0,70)+"  → "+data.total+" imgs","dm");
+    } else if(data.type==="error"){
+      addLog("⚠ "+data.url.slice(0,50)+" — "+data.msg,"er-log");
+    } else if(data.type==="done"){
       eventSource.close();
-      addLog(`✔ Varredura concluída. ${data.total} imagens encontradas. Baixando...`,"nf");
+      addLog("✔ "+data.total+" imagens encontradas. Baixando...","nf-log");
       setBadge("coletando","b-run");
-      $("n-tot").textContent = data.total;
-      if(!data.total){ setBadge("concluído","b-done"); $("btn-stop").disabled=true; return; }
-      downloadAllBlobs(data.images, threads, retries);
+      $("n-tot").textContent=data.total;
+      if(!data.total){setBadge("concluído","b-done");$("btn-stop").disabled=true;return;}
+      downloadAllBlobs(data.images,threads,retries);
     }
   };
 
-  eventSource.onerror = () => {
+  eventSource.onerror=()=>{
     eventSource.close();
-    addLog("⚠ Conexão com backend perdida. Verifique a URL do servidor.","er");
+    addLog("⚠ Conexão com backend perdida.","er-log");
     setBadge("erro","b-stop");
     $("btn-stop").disabled=true;
   };
 }
 
-async function downloadAllBlobs(urls, threads, retries){
-  let idx=0, ok=0, er=0;
+async function downloadAllBlobs(urls,threads,retries){
+  let idx=0,ok=0,er=0;
   const total=urls.length;
-
   async function worker(){
     while(!stopped){
-      const c=idx++; if(c>=total) break;
+      const c=idx++;if(c>=total)break;
       const u=urls[c];
       const b=await fetchBlob(u,retries);
-      if(b){
-        ok++; blobs.push({name:toName(u,c),blob:b});
-        addLog("✔ "+toName(u,c).slice(0,60),"ok");
-      } else {
-        er++; failedUrls.push(u);
-        addLog("✘ "+u.slice(0,70),"er");
-      }
+      if(b){ok++;blobs.push({name:toName(u,c),blob:b});addLog("✔ "+toName(u,c).slice(0,60),"ok-log");}
+      else{er++;failedUrls.push(u);addLog("✘ "+u.slice(0,70),"er-log");}
       updateStats(ok,er,total);
     }
   }
-
   await Promise.all(Array.from({length:threads},()=>worker()));
-
   $("btn-stop").disabled=true;
   if(!stopped){
     setBadge("concluído","b-done");
-    addLog(`🏁 ${ok} coletadas  |  ${er} falhas`,"nf");
+    addLog("🏁 "+ok+" coletadas  |  "+er+" falhas","nf-log");
     if(er>0){$("n-retry").textContent=er;$("btn-retry").style.display="";}
   }
   if(blobs.length>0){
     const tot=blobs.reduce((s,{blob})=>s+blob.size,0);
     $("btn-zip").disabled=false;
-    $("zip-info").textContent=`${blobs.length} imagens prontas · ${fmt(tot)} em memória`;
-    addLog("📦 Botão ZIP habilitado!","nf");
+    $("zip-info").textContent=blobs.length+" imagens prontas · "+fmt(tot)+" em memória";
+    addLog("📦 Clique em Baixar ZIP para salvar tudo.","nf-log");
   }
 }
 
 async function retryFailed(){
-  if(!failedUrls.length) return;
-  const todo=[...failedUrls]; failedUrls=[];
+  if(!failedUrls.length)return;
+  const todo=[...failedUrls];failedUrls=[];
   $("btn-retry").style.display="none";
   setBadge("retentando","b-run");
   const retries=parseInt($("i-retries").value);
-  addLog("↺ Retentando "+todo.length+"...","nf");
-  let ok=nOk, er=0;
+  addLog("↺ Retentando "+todo.length+"...","nf-log");
+  let ok=nOk,er=0;
   for(const u of todo){
-    if(stopped) break;
+    if(stopped)break;
     const b=await fetchBlob(u,retries);
-    if(b){ok++;blobs.push({name:toName(u,Date.now()),blob:b});addLog("✔ "+toName(u,0).slice(0,60),"ok");}
-    else{er++;failedUrls.push(u);addLog("✘ "+u.slice(0,60),"er");}
+    if(b){ok++;blobs.push({name:toName(u,Date.now()),blob:b});addLog("✔ "+toName(u,0).slice(0,60),"ok-log");}
+    else{er++;failedUrls.push(u);addLog("✘ "+u.slice(0,60),"er-log");}
     updateStats(ok,er,nTot);
   }
   setBadge(er>0?"com erros":"concluído",er>0?"b-stop":"b-done");
-  addLog(`↺ +${ok-nOk} recuperadas  |  ${er} ainda falharam`,"nf");
-  if(blobs.length>0) $("btn-zip").disabled=false;
+  addLog("↺ +${ok-nOk} recuperadas  |  ${er} ainda falharam","nf-log");
+  if(blobs.length>0)$("btn-zip").disabled=false;
   if(er>0){$("n-retry").textContent=er;$("btn-retry").style.display="";}
 }
 
 function stopScrape(){
   stopped=true;
-  if(eventSource){ eventSource.close(); eventSource=null; }
+  if(eventSource){eventSource.close();eventSource=null;}
   setBadge("parado","b-stop");
   $("btn-stop").disabled=true;
-  addLog("⏹ Parado.","er");
+  addLog("⏹ Parado.","er-log");
   if(blobs.length>0){
     const tot=blobs.reduce((s,{blob})=>s+blob.size,0);
     $("btn-zip").disabled=false;
-    $("zip-info").textContent=`${blobs.length} imagens coletadas · ${fmt(tot)}`;
+    $("zip-info").textContent=blobs.length+" imagens coletadas · "+fmt(tot);
   }
 }
 
-
-// Garantir estado inicial correto ao carregar
-window.addEventListener('load', function(){
-  document.getElementById('v-form').style.display = 'block';
-  document.getElementById('v-run').style.display = 'none';
-  document.getElementById('btn-zip').disabled = true;
-});
-
 function resetApp(){
-  stopped=true; blobs=[]; failedUrls=[];
-  if(eventSource){ eventSource.close(); eventSource=null; }
-  $("v-form").style.display="block";
-  $("v-run").style.display="none";
-  $("btn-zip").disabled=true;
-  $("btn-zip").textContent="📦  Baixar ZIP com todas as imagens";
-  $("zip-info").textContent="Aguardando conclusão do scraping…";
-  document.title="Digify Scrapper — Image Scraper";
-}
-
-  stopped=true; blobs=[]; failedUrls=[];
+  stopped=true;blobs=[];failedUrls=[];
+  if(eventSource){eventSource.close();eventSource=null;}
   $("v-form").style.display="block";
   $("v-run").style.display="none";
   $("btn-zip").disabled=true;
@@ -406,53 +399,4 @@ function resetApp(){
   document.title="Digify Scrapper — Image Scraper";
 }
 </script>
-
-<!-- ═══ SEO CONTENT FOOTER ═══ -->
-<footer style="width:100%;max-width:700px;margin-top:40px;border-top:1px solid #d0c8e8;padding-top:28px">
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:28px">
-    <div>
-      <h2 style="font-size:13px;color:#380e76;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Como funciona</h2>
-      <p style="font-size:12px;color:#555;line-height:1.8">
-        Digify Scrapper varre automaticamente todas as páginas do site informado, extrai as URLs de imagens (<strong style="color:#777">JPG, PNG, GIF, WEBP, SVG, AVIF, BMP, ICO</strong>) e baixa tudo em um único arquivo ZIP — sem instalar nada.
-      </p>
-    </div>
-    <div>
-      <h2 style="font-size:13px;color:#380e76;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Para que serve</h2>
-      <ul style="font-size:12px;color:#555;line-height:2;list-style:none;padding:0">
-        <li>⬇ Download em massa de imagens de sites</li>
-        <li>🔍 Extração de fotos de lojas virtuais</li>
-        <li>📦 Backup de imagens de blogs</li>
-        <li>🖼 Coleta de imagens para projetos</li>
-        <li>🤖 Web scraping de imagens automatizado</li>
-      </ul>
-    </div>
-  </div>
-  <div style="margin-bottom:24px">
-    <h2 style="font-size:13px;color:#380e76;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Perguntas frequentes</h2>
-    <details style="margin-bottom:8px;border:1px solid #d0c8e8;border-radius:6px;padding:10px 14px">
-      <summary style="font-size:12px;color:#888;cursor:pointer">Como baixar todas as imagens de um site de uma vez?</summary>
-      <p style="font-size:12px;color:#555;margin-top:8px;line-height:1.7">Cole a URL do site no campo acima, escolha a profundidade de varredura e clique em <em>Iniciar Scraping</em>. Digify Scrapper percorre automaticamente todas as páginas e compila as imagens em um ZIP para download.</p>
-    </details>
-    <details style="margin-bottom:8px;border:1px solid #d0c8e8;border-radius:6px;padding:10px 14px">
-      <summary style="font-size:12px;color:#888;cursor:pointer">O que é image scraping e para que serve?</summary>
-      <p style="font-size:12px;color:#555;margin-top:8px;line-height:1.7">Image scraping é a extração automática de imagens de páginas da web. É usado para backup de conteúdo, coleta de dados visuais, análise de concorrência, criação de datasets e arquivamento de mídias.</p>
-    </details>
-    <details style="margin-bottom:8px;border:1px solid #d0c8e8;border-radius:6px;padding:10px 14px">
-      <summary style="font-size:12px;color:#888;cursor:pointer">Quais formatos de imagem são suportados?</summary>
-      <p style="font-size:12px;color:#555;margin-top:8px;line-height:1.7">JPG, JPEG, PNG, GIF, WEBP, SVG, AVIF, BMP, ICO, TIFF e JFIF. O scraper detecta imagens em tags <code style="color:#380e76">&lt;img&gt;</code>, <code style="color:#380e76">srcset</code>, <code style="color:#380e76">data-src</code>, <code style="color:#380e76">data-lazy-src</code> e CSS <code style="color:#380e76">background-image</code>.</p>
-    </details>
-    <details style="border:1px solid #d0c8e8;border-radius:6px;padding:10px 14px">
-      <summary style="font-size:12px;color:#888;cursor:pointer">É gratuito? Precisa instalar algo?</summary>
-      <p style="font-size:12px;color:#555;margin-top:8px;line-height:1.7">100% gratuito e online. Funciona direto no navegador — Chrome, Firefox, Safari, Edge. Não requer cadastro, plugin ou instalação de software.</p>
-    </details>
-  </div>
-  <p style="font-size:11px;color:#9a8aba;text-align:center;padding-bottom:8px">
-    Digify Scrapper · Baixar imagens de sites · Image scraping online · Bulk image downloader · Download all images from website
-  </p>
-</footer>
-
-
-{% endblock %}
-{% block scripts %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 {% endblock %}
