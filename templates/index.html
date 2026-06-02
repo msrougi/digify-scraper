@@ -276,62 +276,98 @@ async function downloadZip(){
 async function startScrape(){
   const url=$("i-url").value.trim();
   if(!url){alert("Informe a URL do site");return;}
-  stopped=false;failedUrls=[];blobs=[];
+
+  // Mostra painel e testa conexão
   $("v-form").style.display="none";
   $("v-run").style.display="block";
-  $("btn-retry").style.display="none";
   $("btn-stop").disabled=false;
+  $("log").innerHTML="";
+  updateStats(0,0,0);setBadge("conectando","b-run");
+  addLog("⏳ Conectando ao servidor...","nf-log");
+
+  try {
+    const wake = await fetch(BACKEND_URL+"/health",{signal:AbortSignal.timeout(30000)});
+    if(!wake.ok) throw new Error("offline");
+  } catch(e) {
+    addLog("⚠ Servidor não respondeu. Aguarde 30s e tente novamente.","er-log");
+    setBadge("erro","b-stop");
+    $("btn-stop").disabled=true;
+    return;
+  }
+
+  stopped=false; failedUrls=[]; blobs=[];
+  $("btn-retry").style.display="none";
   $("btn-zip").disabled=true;
   $("btn-zip").textContent="📦  Baixar ZIP com todas as imagens";
   $("zip-info").textContent="Aguardando conclusão do scraping…";
-  $("log").innerHTML="";
-  updateStats(0,0,0);setBadge("varrendo","b-run");
 
-  const depth=parseInt($("i-depth").value);
-  const delay=parseFloat($("i-delay").value);
-  const threads=parseInt($("i-threads").value);
-  const retries=parseInt($("i-retries").value);
-  const samedom=$("i-domain").value==="same";
+  const depth   = parseInt($("i-depth").value);
+  const delay   = parseFloat($("i-delay").value);
+  const threads = parseInt($("i-threads").value);
+  const retries = parseInt($("i-retries").value);
+  const samedom = $("i-domain").value==="same";
 
-  addLog("🔍 Varrendo: "+url,"nf-log");
+  addLog("🔍 Iniciando varredura: "+url,"nf-log");
+  setBadge("varrendo","b-run");
 
-  const params=new URLSearchParams({url,depth,delay,same_domain:samedom});
-  eventSource=new EventSource(BACKEND_URL+"/scrape?"+params);
-
-  eventSource.onmessage=(e)=>{
-    if(stopped){eventSource.close();return;}
-    const data=JSON.parse(e.data);
-    if(data.type==="image"){
-      $("n-tot").textContent=data.total;
-      addLog("🖼 "+data.url.split("/").pop().split("?")[0].slice(0,60),"dm");
-    } else if(data.type==="page"){
-      addLog("📄 ["+data.depth+"/"+data.max_depth+"] "+data.url.slice(0,70)+"  → "+data.total+" imgs","dm");
-    } else if(data.type==="error"){
-      addLog("⚠ "+data.url.slice(0,50)+" — "+data.msg,"er-log");
-    } else if(data.type==="done"){
-      eventSource.close();
-      addLog("✔ "+data.total+" imagens encontradas. Baixando...","nf-log");
-      setBadge("coletando","b-run");
-      $("n-tot").textContent=data.total;
-      if(!data.total){setBadge("concluído","b-done");$("btn-stop").disabled=true;return;}
-      downloadAllBlobs(data.images,threads,retries);
-    }
-  };
-
-  eventSource.onerror=()=>{
-    eventSource.close();
-    addLog("⚠ Conexão com backend perdida.","er-log");
+  // Inicia o job no backend
+  let jobId;
+  try {
+    const res = await fetch(BACKEND_URL+"/scrape/start",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({url, depth, delay, same_domain: samedom}),
+      signal: AbortSignal.timeout(15000)
+    });
+    const data = await res.json();
+    if(data.error) throw new Error(data.error);
+    jobId = data.job_id;
+  } catch(e) {
+    addLog("⚠ Erro ao iniciar: "+e.message,"er-log");
     setBadge("erro","b-stop");
-    $("btn-stop").disabled=true;
-  };
+    return;
+  }
+
+  // Polling a cada 2 segundos
+  let lastTotal = 0;
+  const pollInterval = setInterval(async () => {
+    if(stopped){ clearInterval(pollInterval); return; }
+    try {
+      const res = await fetch(BACKEND_URL+"/scrape/status/"+jobId,{signal:AbortSignal.timeout(10000)});
+      const data = await res.json();
+
+      if(data.total > lastTotal){
+        addLog("📄 ["+data.cur_depth+"] "+data.current_page.slice(0,70)+"  → "+data.total+" imgs","dm");
+        lastTotal = data.total;
+      }
+      $("n-tot").textContent = data.total;
+
+      if(data.done || stopped){
+        clearInterval(pollInterval);
+        addLog("✔ Varredura concluída. "+data.total+" imagens. Baixando...","nf-log");
+        setBadge("coletando","b-run");
+        if(!data.total){
+          setBadge("concluído","b-done");
+          $("btn-stop").disabled=true;
+          return;
+        }
+        // Busca lista final de imagens
+        const finalRes = await fetch(BACKEND_URL+"/scrape/status/"+jobId);
+        const finalData = await finalRes.json();
+        await downloadAllBlobs(finalData.images, threads, retries);
+      }
+    } catch(e) {
+      // ignora erros de polling temporários
+    }
+  }, 2000);
 }
 
-async function downloadAllBlobs(urls,threads,retries){
-  let idx=0,ok=0,er=0;
+async function downloadAllBlobs(urls, threads, retries){
+  let idx=0, ok=0, er=0;
   const total=urls.length;
   async function worker(){
     while(!stopped){
-      const c=idx++;if(c>=total)break;
+      const c=idx++; if(c>=total)break;
       const u=urls[c];
       const b=await fetchBlob(u,retries);
       if(b){ok++;blobs.push({name:toName(u,c),blob:b});addLog("✔ "+toName(u,c).slice(0,60),"ok-log");}
@@ -356,12 +392,12 @@ async function downloadAllBlobs(urls,threads,retries){
 
 async function retryFailed(){
   if(!failedUrls.length)return;
-  const todo=[...failedUrls];failedUrls=[];
+  const todo=[...failedUrls]; failedUrls=[];
   $("btn-retry").style.display="none";
   setBadge("retentando","b-run");
   const retries=parseInt($("i-retries").value);
   addLog("↺ Retentando "+todo.length+"...","nf-log");
-  let ok=nOk,er=0;
+  let ok=nOk, er=0;
   for(const u of todo){
     if(stopped)break;
     const b=await fetchBlob(u,retries);
@@ -370,14 +406,12 @@ async function retryFailed(){
     updateStats(ok,er,nTot);
   }
   setBadge(er>0?"com erros":"concluído",er>0?"b-stop":"b-done");
-  addLog("↺ +${ok-nOk} recuperadas  |  ${er} ainda falharam","nf-log");
-  if(blobs.length>0)$("btn-zip").disabled=false;
+  if(blobs.length>0) $("btn-zip").disabled=false;
   if(er>0){$("n-retry").textContent=er;$("btn-retry").style.display="";}
 }
 
 function stopScrape(){
   stopped=true;
-  if(eventSource){eventSource.close();eventSource=null;}
   setBadge("parado","b-stop");
   $("btn-stop").disabled=true;
   addLog("⏹ Parado.","er-log");
@@ -389,8 +423,7 @@ function stopScrape(){
 }
 
 function resetApp(){
-  stopped=true;blobs=[];failedUrls=[];
-  if(eventSource){eventSource.close();eventSource=null;}
+  stopped=true; blobs=[]; failedUrls=[];
   $("v-form").style.display="block";
   $("v-run").style.display="none";
   $("btn-zip").disabled=true;
@@ -398,5 +431,6 @@ function resetApp(){
   $("zip-info").textContent="Aguardando conclusão do scraping…";
   document.title="Digify Scrapper — Image Scraper";
 }
+
 </script>
 {% endblock %}

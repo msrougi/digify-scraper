@@ -152,22 +152,18 @@ Sitemap: https://imagescrapper.digify.live/sitemap.xml
 """
     return Response(txt, mimetype="text/plain")
 
-# ── Scraping SSE ───────────────────────────────────────────────
-@app.route("/scrape")
-def scrape():
-    url      = request.args.get("url","").strip()
-    depth    = int(request.args.get("depth", 2))
-    delay    = float(request.args.get("delay", 0.3))
-    same_dom = request.args.get("same_domain","true").lower() == "true"
-    if not url: return jsonify({"error":"URL obrigatória"}), 400
-    if not url.startswith(("http://","https://")): url = "https://" + url
-    try: base_domain = urllib.parse.urlparse(url).netloc
-    except: return jsonify({"error":"URL inválida"}), 400
+import threading, uuid
 
-    def generate():
+# ── Job store (in-memory) ──────────────────────────────────────
+jobs = {}
+
+def run_job(job_id, url, depth, delay, same_dom):
+    job = jobs[job_id]
+    try:
+        base_domain = urllib.parse.urlparse(url).netloc
         visited = set(); queue = deque([(url,0)]); images = set()
         session = req.Session(); session.headers.update(HEADERS)
-        while queue:
+        while queue and not job.get("stop"):
             page_url, d = queue.popleft()
             if page_url in visited: continue
             visited.add(page_url)
@@ -176,24 +172,58 @@ def scrape():
                 ct = r.headers.get("Content-Type","")
                 if "image/" in ct:
                     images.add(page_url)
-                    yield f"data: {json.dumps({'type':'image','url':page_url,'total':len(images)})}\n\n"
-                    continue
-                if "text/html" not in ct: continue
-                found = extract_images(r.text, page_url)
-                for img in (found - images):
-                    yield f"data: {json.dumps({'type':'image','url':img,'total':len(images)+1})}\n\n"
-                images.update(found)
-                yield f"data: {json.dumps({'type':'page','url':page_url,'depth':d,'max_depth':depth,'total':len(images)})}\n\n"
-                if d < depth:
-                    for link in extract_links(r.text, page_url, base_domain, same_dom):
-                        if link not in visited: queue.append((link, d+1))
+                elif "text/html" in ct:
+                    found = extract_images(r.text, page_url)
+                    images.update(found)
+                    if d < depth:
+                        for link in extract_links(r.text, page_url, base_domain, same_dom):
+                            if link not in visited: queue.append((link, d+1))
+                job["images"] = list(images)
+                job["pages"] = len(visited)
+                job["current_page"] = page_url
+                job["cur_depth"] = d
             except Exception as e:
-                yield f"data: {json.dumps({'type':'error','url':page_url,'msg':str(e)[:80]})}\n\n"
+                job["errors"] = job.get("errors",0) + 1
             if delay > 0: time.sleep(delay)
-        yield f"data: {json.dumps({'type':'done','total':len(images),'images':list(images)})}\n\n"
+    except Exception as e:
+        job["error"] = str(e)
+    job["done"] = True
 
-    return Response(generate(), mimetype="text/event-stream",
-                    headers={"Cache-Control":"no-cache","X-Accel-Buffering":"no"})
+@app.route("/scrape/start", methods=["POST"])
+def scrape_start():
+    data = request.json or {}
+    url = data.get("url","").strip()
+    if not url: return jsonify({"error":"URL obrigatória"}), 400
+    if not url.startswith(("http://","https://")): url = "https://" + url
+    depth    = int(data.get("depth", 2))
+    delay    = float(data.get("delay", 0.3))
+    same_dom = data.get("same_domain", True)
+    job_id = str(uuid.uuid4())
+    jobs[job_id] = {"done":False,"images":[],"pages":0,"errors":0,"current_page":"","cur_depth":0,"stop":False}
+    threading.Thread(target=run_job, args=(job_id,url,depth,delay,same_dom), daemon=True).start()
+    return jsonify({"job_id": job_id})
+
+@app.route("/scrape/status/<job_id>")
+def scrape_status(job_id):
+    job = jobs.get(job_id)
+    if not job: return jsonify({"error":"não encontrado"}), 404
+    return jsonify({
+        "done": job["done"],
+        "total": len(job["images"]),
+        "pages": job["pages"],
+        "current_page": job.get("current_page",""),
+        "cur_depth": job.get("cur_depth",0),
+        "errors": job.get("errors",0),
+        "images": job["images"] if job["done"] else [],
+    })
+
+@app.route("/scrape/stop/<job_id>", methods=["POST"])
+def scrape_stop(job_id):
+    job = jobs.get(job_id)
+    if not job: return jsonify({"error":"não encontrado"}), 404
+    job["stop"] = True
+    return jsonify({"ok":True,"images":job["images"]})
+
 
 # ── Download ───────────────────────────────────────────────────
 @app.route("/download")
