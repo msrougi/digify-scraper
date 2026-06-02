@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block extra_style %}
+<style>
 .art-wrap{max-width:1000px;margin:32px auto;padding:0 24px;display:grid;grid-template-columns:1fr 300px;gap:28px;align-items:start}
 @media(max-width:720px){
   .art-wrap{grid-template-columns:1fr;padding:0 16px;margin:16px auto}
@@ -46,6 +47,7 @@
 .cta-side h4{color:#fff;font-size:13px;margin-bottom:8px}
 .cta-side p{color:rgba(255,255,255,.8);font-size:12px;margin-bottom:14px;line-height:1.6}
 .cta-side a{background:#fff;color:var(--purple);padding:9px 20px;border-radius:8px;text-decoration:none;font-weight:800;font-size:13px;display:inline-block}
+</style>
 {% endblock %}
 {% block content %}
 <div class="art-wrap">
