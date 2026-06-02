@@ -1,17 +1,17 @@
 {% extends "base.html" %}
-{% block title %}Digify Scrapper — Baixe Todas as Imagens de Qualquer Site Grátis{% endblock %}
-{% block canonical %}<link rel="canonical" href="https://imagescrapper.digify.live/">{% endblock %}
+{% block title %}Digify Scraper — Baixe Todas as Imagens de Qualquer Site Grátis{% endblock %}
+{% block canonical %}<link rel="canonical" href="https://imagescraper.digify.live/">{% endblock %}
 {% block meta %}
 <meta name="description" content="Ferramenta gratuita para baixar todas as imagens de qualquer site em um clique. Image scraper online, extrator de imagens, download em massa de fotos.">
 <meta name="keywords" content="image scraper, baixar imagens de site, download imagens site, extrair imagens site, bulk image downloader">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://imagescrapper.digify.live/">
-<meta property="og:title" content="Digify Scrapper — Baixe Todas as Imagens de Qualquer Site">
+<meta property="og:url" content="https://imagescraper.digify.live/">
+<meta property="og:title" content="Digify Scraper — Baixe Todas as Imagens de Qualquer Site">
 <meta property="og:description" content="Ferramenta gratuita para baixar todas as imagens de qualquer site em um clique.">
-<meta property="og:site_name" content="Digify Scrapper">
+<meta property="og:site_name" content="Digify Scraper">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Digify Scrapper","url":"https://imagescrapper.digify.live/","description":"Ferramenta gratuita para baixar todas as imagens de qualquer site.","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"BRL"},"isAccessibleForFree":true}
+{"@context":"https://schema.org","@type":"WebApplication","name":"Digify Scraper","url":"https://imagescraper.digify.live/","description":"Ferramenta gratuita para baixar todas as imagens de qualquer site.","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"BRL"},"isAccessibleForFree":true}
 </script>
 {% endblock %}
 {% block extra_style %}
@@ -93,6 +93,15 @@ input:focus,select:focus{border-color:var(--purple)}
 </style>
 {% endblock %}
 {% block content %}
+<script>
+// Força estado correto ao carregar — evita flash do painel de progresso
+document.addEventListener("DOMContentLoaded", function(){
+  var f = document.getElementById("v-form");
+  var r = document.getElementById("v-run");
+  if(f) f.style.display = "block";
+  if(r) r.style.display = "none";
+});
+</script>
 
 <!-- LOGO -->
 <div class="logo-wrap">
@@ -101,7 +110,7 @@ input:focus,select:focus{border-color:var(--purple)}
 
 <div class="tool-wrap">
   <div class="tool-title">
-    <h1>Digify Scrapper</h1>
+    <h1>Digify Scraper</h1>
     <p>Image Scraper</p>
   </div>
 
@@ -164,7 +173,7 @@ input:focus,select:focus{border-color:var(--purple)}
 <!-- SEO CONTENT -->
 <div class="seo-section">
   <div class="seo-box">
-    <h2>🖼️ O que o Digify Scrapper faz</h2>
+    <h2>🖼️ O que o Digify Scraper faz</h2>
     <p>Varre automaticamente todas as páginas do site informado, extrai as URLs de imagens (<strong>JPG, PNG, GIF, WEBP, SVG, AVIF, BMP, ICO</strong>) e baixa tudo em um único arquivo ZIP — sem instalar nada.</p>
     <div class="feat-grid">
       <div class="feat"><strong>⬇ Download em massa</strong>Baixe centenas de imagens de sites em um clique</div>
@@ -178,7 +187,7 @@ input:focus,select:focus{border-color:var(--purple)}
     <h2>❓ Perguntas frequentes</h2>
     <div class="faq">
       <details><summary>Como baixar todas as imagens de um site de uma vez?</summary>
-        <p>Cole a URL do site, escolha a profundidade de varredura e clique em <strong>Iniciar Scraping</strong>. O Digify Scrapper percorre automaticamente todas as páginas e compila as imagens em um ZIP para download.</p>
+        <p>Cole a URL do site, escolha a profundidade de varredura e clique em <strong>Iniciar Scraping</strong>. O Digify Scraper percorre automaticamente todas as páginas e compila as imagens em um ZIP para download.</p>
       </details>
       <details><summary>O que é image scraping e para que serve?</summary>
         <p>Image scraping é a extração automática de imagens de páginas da web. Usado para backup de conteúdo, coleta de dados visuais, análise de concorrência e arquivamento de mídias.</p>
@@ -221,7 +230,7 @@ function updateStats(ok,er,tot){
   const pct=tot>0?Math.round((ok+er)/tot*100):0;
   $("pb").style.width=pct+"%";$("pb-lbl").textContent=pct+"%";
   $("pb-detail").textContent=tot>0?`${ok+er} / ${tot}`:"";
-  document.title=`Digify Scrapper ${pct}% — ${ok} imgs`;
+  document.title=`Digify Scraper ${pct}% — ${ok} imgs`;
 }
 
 function setBadge(txt,cls){
@@ -240,7 +249,9 @@ function toName(url,i){
 async function fetchBlob(url,retries=3){
   for(let i=0;i<=retries;i++){
     try{
-      const r=await fetch(BACKEND_URL+"/download?url="+encodeURIComponent(url),{signal:AbortSignal.timeout(20000)});
+      const ctrl2=new AbortController();const tid2=setTimeout(()=>ctrl2.abort(),20000);
+      const r=await fetch(BACKEND_URL+"/download?url="+encodeURIComponent(url),{signal:ctrl2.signal});
+      clearTimeout(tid2);
       if(!r.ok)throw new Error("HTTP "+r.status);
       const b=await r.blob();
       const min=parseInt($("i-minsize").value||"1024");
@@ -285,11 +296,23 @@ async function startScrape(){
   updateStats(0,0,0);setBadge("conectando","b-run");
   addLog("⏳ Conectando ao servidor...","nf-log");
 
-  try {
-    const wake = await fetch(BACKEND_URL+"/health",{signal:AbortSignal.timeout(30000)});
-    if(!wake.ok) throw new Error("offline");
-  } catch(e) {
-    addLog("⚠ Servidor não respondeu. Aguarde 30s e tente novamente.","er-log");
+  // Acorda o servidor — pode demorar até 60s no plano gratuito
+  addLog("⏳ Aguardando servidor acordar (pode levar até 60s na primeira vez)...","nf-log");
+  let acordou = false;
+  for(let tentativa = 1; tentativa <= 6; tentativa++){
+    try {
+      const ctrl = new AbortController();
+      const tid = setTimeout(()=>ctrl.abort(), 15000);
+      const wake = await fetch(BACKEND_URL+"/health", {signal: ctrl.signal});
+      clearTimeout(tid);
+      if(wake.ok){ acordou = true; break; }
+    } catch(e) {
+      addLog("⏳ Tentativa "+tentativa+"/6 — servidor ainda acordando...","dm");
+      await sleep(5000);
+    }
+  }
+  if(!acordou){
+    addLog("⚠ Servidor não respondeu após 60s. Tente recarregar a página.","er-log");
     setBadge("erro","b-stop");
     $("btn-stop").disabled=true;
     return;
@@ -313,11 +336,12 @@ async function startScrape(){
   // Inicia o job no backend
   let jobId;
   try {
+    const ctrl3=new AbortController();setTimeout(()=>ctrl3.abort(),15000);
     const res = await fetch(BACKEND_URL+"/scrape/start",{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body: JSON.stringify({url, depth, delay, same_domain: samedom}),
-      signal: AbortSignal.timeout(15000)
+      signal: ctrl3.signal
     });
     const data = await res.json();
     if(data.error) throw new Error(data.error);
@@ -333,7 +357,8 @@ async function startScrape(){
   const pollInterval = setInterval(async () => {
     if(stopped){ clearInterval(pollInterval); return; }
     try {
-      const res = await fetch(BACKEND_URL+"/scrape/status/"+jobId,{signal:AbortSignal.timeout(10000)});
+      const ctrl4=new AbortController();setTimeout(()=>ctrl4.abort(),10000);
+      const res = await fetch(BACKEND_URL+"/scrape/status/"+jobId,{signal:ctrl4.signal});
       const data = await res.json();
 
       if(data.total > lastTotal){
@@ -429,7 +454,7 @@ function resetApp(){
   $("btn-zip").disabled=true;
   $("btn-zip").textContent="📦  Baixar ZIP com todas as imagens";
   $("zip-info").textContent="Aguardando conclusão do scraping…";
-  document.title="Digify Scrapper — Image Scraper";
+  document.title="Digify Scraper — Image Scraper";
 }
 
 </script>

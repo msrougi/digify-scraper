@@ -21,10 +21,10 @@ git push -u origin main
 ## 3. Domínio personalizado
 
 Ainda em **Settings → Networking → Custom Domain**:
-- Adicione `imagescrapper.digify.live`
+- Adicione `imagescraper.digify.live`
 - No painel do seu DNS, crie um CNAME apontando para a URL do Railway
 
-Pronto — seu site estará em `https://imagescrapper.digify.live`
+Pronto — seu site estará em `https://imagescraper.digify.live`
 
 ## Endpoints
 

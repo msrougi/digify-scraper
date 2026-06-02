@@ -9,13 +9,13 @@
 #     Baixe todas as imagens de qualquer site em um clique.<br>
 #     Sem cadastro, sem instalação — export direto em ZIP.
 #   </p>
-#   <a href="https://imagescrapper.digify.live" 
+#   <a href="https://imagescraper.digify.live" 
 #      style="background:#380e76;color:#fff;padding:13px 32px;border-radius:8px;text-decoration:none;font-weight:700;font-size:15px;display:inline-block">
 #     Baixar imagens de sites grátis →
 #   </a>
 #   <p style="margin-top:16px;font-size:12px;color:#999">
 #     Também disponível em: 
-#     <a href="https://imagescrapper.digify.live/en/" style="color:#380e76">English version</a>
+#     <a href="https://imagescraper.digify.live/en/" style="color:#380e76">English version</a>
 #   </p>
 # </section>
 #
@@ -30,7 +30,7 @@ import requests as req
 from bs4 import BeautifulSoup
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins="*", allow_headers=["Content-Type"], methods=["GET","POST","OPTIONS"])
 
 HEADERS = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36"}
 IMAGE_EXTENSIONS = {".jpg",".jpeg",".png",".gif",".webp",".svg",".bmp",".tiff",".tif",".avif",".ico",".jfif"}
@@ -76,6 +76,15 @@ def extract_links(html, base_url, base_domain, same_domain):
     return links
 
 # ── Pages ──────────────────────────────────────────────────────
+
+@app.after_request
+def add_no_cache(response):
+    if request.path == "/":
+        response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+    return response
+
 @app.route("/")
 def index(): return render_template("index.html")
 
@@ -117,17 +126,17 @@ def health(): return jsonify({"status":"ok"})
 @app.route("/sitemap.xml")
 def sitemap():
     pages = [
-        ("https://imagescrapper.digify.live/",                                      "1.0",  "weekly"),
-        ("https://imagescrapper.digify.live/blog",                                  "0.9",  "weekly"),
-        ("https://imagescrapper.digify.live/blog/como-baixar-imagens-de-sites",     "0.8",  "monthly"),
-        ("https://imagescrapper.digify.live/blog/o-que-e-image-scraping",           "0.8",  "monthly"),
-        ("https://imagescrapper.digify.live/blog/melhores-ferramentas-download-imagens", "0.8", "monthly"),
-        ("https://imagescrapper.digify.live/blog/como-fazer-backup-imagens-wordpress",  "0.8", "monthly"),
-        ("https://imagescrapper.digify.live/blog/image-scraping-python",            "0.8",  "monthly"),
-        ("https://imagescrapper.digify.live/blog/direitos-autorais-scraping-imagens","0.8", "monthly"),
-        ("https://imagescrapper.digify.live/contato",                               "0.4",  "yearly"),
-        ("https://imagescrapper.digify.live/privacidade",                           "0.3",  "yearly"),
-        ("https://imagescrapper.digify.live/termos",                                "0.3",  "yearly"),
+        ("https://imagescraper.digify.live/",                                      "1.0",  "weekly"),
+        ("https://imagescraper.digify.live/blog",                                  "0.9",  "weekly"),
+        ("https://imagescraper.digify.live/blog/como-baixar-imagens-de-sites",     "0.8",  "monthly"),
+        ("https://imagescraper.digify.live/blog/o-que-e-image-scraping",           "0.8",  "monthly"),
+        ("https://imagescraper.digify.live/blog/melhores-ferramentas-download-imagens", "0.8", "monthly"),
+        ("https://imagescraper.digify.live/blog/como-fazer-backup-imagens-wordpress",  "0.8", "monthly"),
+        ("https://imagescraper.digify.live/blog/image-scraping-python",            "0.8",  "monthly"),
+        ("https://imagescraper.digify.live/blog/direitos-autorais-scraping-imagens","0.8", "monthly"),
+        ("https://imagescraper.digify.live/contato",                               "0.4",  "yearly"),
+        ("https://imagescraper.digify.live/privacidade",                           "0.3",  "yearly"),
+        ("https://imagescraper.digify.live/termos",                                "0.3",  "yearly"),
     ]
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
     xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -148,7 +157,7 @@ Disallow: /scrape
 Disallow: /download
 Disallow: /en/
 
-Sitemap: https://imagescrapper.digify.live/sitemap.xml
+Sitemap: https://imagescraper.digify.live/sitemap.xml
 """
     return Response(txt, mimetype="text/plain")
 
