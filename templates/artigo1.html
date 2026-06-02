@@ -1,0 +1,101 @@
+{% extends "artigo_base.html" %}
+{% block title %}Como Baixar Todas as Imagens de um Site de Uma Vez — Digify Scrapper{% endblock %}
+{% block canonical %}<link rel="canonical" href="https://imagescrapper.digify.live/blog/como-baixar-imagens-de-sites">{% endblock %}
+{% block meta %}
+<meta name="description" content="Guia completo para baixar todas as imagens de qualquer site de uma vez. Aprenda 3 métodos gratuitos: ferramenta online, extensão e Python. Sem instalar nada.">
+<meta name="author" content="Digify Scrapper">
+<meta property="og:title" content="Como Baixar Todas as Imagens de um Site de Uma Vez">
+<meta property="og:description" content="Guia completo com 3 métodos gratuitos para baixar imagens de sites em massa.">
+<meta property="og:url" content="https://imagescrapper.digify.live/blog/como-baixar-imagens-de-sites">
+<meta property="og:type" content="article">
+<meta name="twitter:title" content="Como Baixar Todas as Imagens de um Site de Uma Vez">
+{% endblock %}
+{% block schema %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Como Baixar Todas as Imagens de um Site de Uma Vez","datePublished":"2025-01-15","dateModified":"2025-01-15","author":{"@type":"Organization","name":"Digify Scrapper","url":"https://imagescrapper.digify.live"},"publisher":{"@type":"Organization","name":"Digify Scrapper","logo":{"@type":"ImageObject","url":"https://imagescrapper.digify.live/static/logo.webp"}},"description":"Guia completo para baixar todas as imagens de qualquer site de uma vez usando ferramentas gratuitas.","mainEntityOfPage":{"@type":"WebPage","@id":"https://imagescrapper.digify.live/blog/como-baixar-imagens-de-sites"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://imagescrapper.digify.live/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://imagescrapper.digify.live/blog"},{"@type":"ListItem","position":3,"name":"Como Baixar Todas as Imagens de um Site"}]}
+</script>
+{% endblock %}
+{% block breadcrumb %}
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <a href="/">Home</a><span>›</span><a href="/blog">Blog</a><span>›</span><span>Como Baixar Imagens de Sites</span>
+</nav>
+{% endblock %}
+{% block article %}
+<div class="art-tag"><span>Tutorial</span><span style="color:var(--border)">·</span><span>5 min de leitura</span></div>
+<h1>Como Baixar Todas as Imagens de um Site de Uma Vez</h1>
+<div class="art-meta">
+  <span>📅 15 de Janeiro de 2025</span>
+  <span>✍️ Digify Scrapper</span>
+  <span>⏱ 5 min de leitura</span>
+</div>
+
+<p>Você já precisou salvar todas as fotos de um site e ficou clicando em cada imagem individualmente? Isso é frustrante e leva horas. Neste guia, você aprende a <strong>baixar todas as imagens de qualquer site em segundos</strong>, de forma gratuita e sem instalar nenhum programa.</p>
+
+<h2>Por que baixar imagens de sites em massa?</h2>
+<p>Existem várias razões legítimas para fazer o download em massa de imagens:</p>
+<ul>
+  <li>Fazer backup das imagens do seu próprio site ou loja virtual</li>
+  <li>Coleta de referências visuais para projetos de design</li>
+  <li>Criação de datasets para projetos de machine learning</li>
+  <li>Arquivamento de conteúdo antes de uma migração de plataforma</li>
+  <li>Análise competitiva de e-commerces</li>
+</ul>
+
+<div class="cta-box">
+  <p>🖼️ Quer baixar agora? Use o Digify Scrapper gratuitamente</p>
+  <a href="/">Abrir Image Scraper</a>
+</div>
+
+<h2>Método 1: Digify Scrapper (mais fácil, recomendado)</h2>
+<p>O <strong>Digify Scrapper</strong> é uma ferramenta online gratuita que varre automaticamente todas as páginas de um site e baixa as imagens em um arquivo ZIP. Não precisa instalar nada.</p>
+<h3>Passo a passo:</h3>
+<ol>
+  <li>Acesse <strong>imagescrapper.digify.live</strong></li>
+  <li>Cole a URL do site no campo indicado</li>
+  <li>Escolha a profundidade de varredura (recomendamos 2 para a maioria dos sites)</li>
+  <li>Clique em <strong>Iniciar Scraping</strong></li>
+  <li>Aguarde — veja as imagens sendo encontradas em tempo real</li>
+  <li>Clique em <strong>Baixar ZIP</strong></li>
+</ol>
+<h3>O que significa a profundidade?</h3>
+<p>A profundidade define quantos níveis de links o scraper vai seguir. Com profundidade 1, ele varre apenas a página inicial. Com profundidade 2, também segue todos os links encontrados nela. Para lojas virtuais com muitos produtos, use profundidade 3.</p>
+
+<h2>Método 2: Extensão de navegador</h2>
+<p>Extensões como <strong>Imageye</strong> e <strong>Download All Images</strong> funcionam bem para páginas simples, mas não seguem links internos — ou seja, só baixam imagens da página atual. Para sites inteiros, use um scraper completo como o Digify Scrapper.</p>
+
+<h2>Método 3: Python (para desenvolvedores)</h2>
+<p>Se você sabe programar, pode criar um scraper personalizado. Veja nosso guia completo: <a href="/blog/image-scraping-python" style="color:var(--purple)">Image Scraping com Python</a>.</p>
+<pre><code>pip install requests beautifulsoup4
+
+import requests
+from bs4 import BeautifulSoup
+
+url = "https://exemplo.com"
+r = requests.get(url)
+soup = BeautifulSoup(r.text, "html.parser")
+imgs = [img["src"] for img in soup.find_all("img") if img.get("src")]
+print(f"{len(imgs)} imagens encontradas")</code></pre>
+
+<h2>Formatos suportados</h2>
+<p>O Digify Scrapper detecta: <code>JPG</code>, <code>PNG</code>, <code>GIF</code>, <code>WEBP</code>, <code>SVG</code>, <code>AVIF</code>, <code>BMP</code> e <code>ICO</code>.</p>
+
+<h2>Conclusão</h2>
+<p>A forma mais simples de baixar todas as imagens de um site é usando uma ferramenta online como o Digify Scrapper. Para desenvolvedores, Python oferece mais flexibilidade. Seja qual for o método, respeite sempre os direitos autorais — saiba mais em <a href="/blog/direitos-autorais-scraping-imagens" style="color:var(--purple)">É Legal Baixar Imagens de Sites?</a></p>
+
+<div class="cta-box">
+  <p>✅ Pronto para começar? É grátis e sem cadastro</p>
+  <a href="/">Baixar imagens agora</a>
+</div>
+{% endblock %}
+{% block related %}
+<div class="related">
+  <h3>📚 Artigos relacionados</h3>
+  <a href="/blog/o-que-e-image-scraping">O que é Image Scraping? Guia Completo</a>
+  <a href="/blog/melhores-ferramentas-download-imagens">As 5 Melhores Ferramentas de Download em Massa</a>
+  <a href="/blog/como-fazer-backup-imagens-wordpress">Como Fazer Backup das Imagens do WordPress</a>
+  <a href="/blog/direitos-autorais-scraping-imagens">É Legal Baixar Imagens de Sites?</a>
+</div>
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends "artigo_base.html" %}
+{% block title %}Image Scraping com Python: Guia Prático com Exemplos — Digify Scrapper{% endblock %}
+{% block canonical %}<link rel="canonical" href="https://imagescrapper.digify.live/blog/image-scraping-python">{% endblock %}
+{% block meta %}
+<meta name="description" content="Aprenda a criar um image scraper em Python do zero com requests e BeautifulSoup. Exemplos completos e funcionais.">
+<meta name="author" content="Digify Scrapper">
+<meta property="og:title" content="Image Scraping com Python: Guia Prático com Exemplos">
+<meta property="og:description" content="Aprenda a criar um image scraper em Python do zero com requests e BeautifulSoup. Exemplos completos e funcionais.">
+<meta property="og:url" content="https://imagescrapper.digify.live/blog/image-scraping-python">
+<meta property="og:type" content="article">
+{% endblock %}
+{% block schema %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Image Scraping com Python: Guia Prático com Exemplos","datePublished":"2025-01-15","dateModified":"2025-01-15","author":{"@type":"Organization","name":"Digify Scrapper","url":"https://imagescrapper.digify.live"},"publisher":{"@type":"Organization","name":"Digify Scrapper","logo":{"@type":"ImageObject","url":"https://imagescrapper.digify.live/static/logo.webp"}},"description":"Aprenda a criar um image scraper em Python do zero com requests e BeautifulSoup. Exemplos completos e funcionais.","mainEntityOfPage":{"@type":"WebPage","@id":"https://imagescrapper.digify.live/blog/image-scraping-python"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://imagescrapper.digify.live/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://imagescrapper.digify.live/blog"},{"@type":"ListItem","position":3,"name":"Image Scraping com Python: Guia Prático com Exemplos"}]}
+</script>
+{% endblock %}
+{% block breadcrumb %}
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <a href="/">Home</a><span>›</span><a href="/blog">Blog</a><span>›</span><span>Image Scraping com Python: Guia Prático ...</span>
+</nav>
+{% endblock %}
+{% block article %}
+<div class="art-tag">Programação · 10 min de leitura</div>
+<h1>Image Scraping com Python: Guia Prático com Exemplos</h1>
+<div class="art-meta">📅 Janeiro 2025 · por Digify Scrapper · ⏱ 10 min</div>
+
+<p>Python é a linguagem mais popular para web scraping. Com as bibliotecas certas, você cria um image scraper poderoso em poucas linhas. Neste guia, vamos do básico ao avançado.</p>
+
+<h2>Instalação das dependências</h2>
+<pre><code>pip install requests beautifulsoup4 pillow</code></pre>
+
+<h2>Scraper básico: imagens de uma página</h2>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
+from pathlib import Path
+
+def baixar_imagens(url, pasta="imagens"):
+    Path(pasta).mkdir(exist_ok=True)
+    r = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
+    soup = BeautifulSoup(r.text, "html.parser")
+    
+    for i, img in enumerate(soup.find_all("img")):
+        src = img.get("src") or img.get("data-src")
+        if not src:
+            continue
+        img_url = urljoin(url, src)
+        try:
+            img_r = requests.get(img_url, timeout=10)
+            ext = img_url.split(".")[-1].split("?")[0][:4]
+            with open(f"{pasta}/imagem_{i}.{ext}", "wb") as f:
+                f.write(img_r.content)
+            print(f"Baixada: {img_url}")
+        except Exception as e:
+            print(f"Erro: {e}")
+
+baixar_imagens("https://exemplo.com")</code></pre>
+
+<h2>Scraper avançado: site inteiro</h2>
+<pre><code>from collections import deque
+
+def scraper_completo(url_inicial, profundidade=2):
+    visitadas = set()
+    fila = deque([(url_inicial, 0)])
+    imagens = set()
+    dominio = url_inicial.split("/")[2]
+    
+    while fila:
+        url, nivel = fila.popleft()
+        if url in visitadas or nivel > profundidade:
+            continue
+        visitadas.add(url)
+        
+        try:
+            r = requests.get(url, timeout=10,
+                headers={"User-Agent": "Mozilla/5.0"})
+            soup = BeautifulSoup(r.text, "html.parser")
+            
+            # Coleta imagens
+            for img in soup.find_all("img"):
+                for attr in ["src", "srcset", "data-src"]:
+                    src = img.get(attr, "")
+                    if src:
+                        imagens.add(urljoin(url, src.split(",")[0].strip()))
+            
+            # Segue links internos
+            for a in soup.find_all("a", href=True):
+                link = urljoin(url, a["href"])
+                if dominio in link and link not in visitadas:
+                    fila.append((link, nivel + 1))
+                    
+        except Exception as e:
+            print(f"Erro em {url}: {e}")
+    
+    return list(imagens)
+
+urls = scraper_completo("https://exemplo.com", profundidade=2)
+print(f"{len(urls)} imagens encontradas")</code></pre>
+
+<h2>Alternativa sem código</h2>
+<p>Se você não quer programar, o <strong>Digify Scrapper</strong> faz tudo isso automaticamente via interface web, com download em ZIP.</p>
+
+<div class="cta-box">
+  <p>🐍 Prefere sem código? Use o Digify Scrapper</p>
+  <a href="/">Abrir ferramenta gratuita</a>
+</div>
+
+<h2>Boas práticas de scraping</h2>
+<ul>
+  <li>Sempre adicione um <code>User-Agent</code> nos headers</li>
+  <li>Respeite o <code>robots.txt</code> do site</li>
+  <li>Adicione um delay entre requisições (<code>time.sleep(0.5)</code>)</li>
+  <li>Não sobrecarregue servidores de terceiros</li>
+  <li>Verifique os Termos de Serviço do site</li>
+</ul>
+{% endblock %}
+{% block related %}
+<div class="related">
+  <h3>📚 Artigos relacionados</h3>
+  <a href="/blog/como-baixar-imagens-de-sites">Como Baixar Todas as Imagens de um Site</a>
+  <a href="/blog/o-que-e-image-scraping">O que é Image Scraping?</a>
+  <a href="/blog/melhores-ferramentas-download-imagens">Melhores Ferramentas de Download</a>
+  <a href="/blog/image-scraping-python">Image Scraping com Python</a>
+</div>
+{% endblock %}

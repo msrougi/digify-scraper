@@ -1,0 +1,80 @@
+{% extends "artigo_base.html" %}
+{% block title %}Como Fazer Backup de Todas as Imagens do seu WordPress — Digify Scrapper{% endblock %}
+{% block canonical %}<link rel="canonical" href="https://imagescrapper.digify.live/blog/como-fazer-backup-imagens-wordpress">{% endblock %}
+{% block meta %}
+<meta name="description" content="Como fazer backup completo das imagens da biblioteca de mídia do WordPress e WooCommerce. Passo a passo gratuito.">
+<meta name="author" content="Digify Scrapper">
+<meta property="og:title" content="Como Fazer Backup de Todas as Imagens do seu WordPress">
+<meta property="og:description" content="Como fazer backup completo das imagens da biblioteca de mídia do WordPress e WooCommerce. Passo a passo gratuito.">
+<meta property="og:url" content="https://imagescrapper.digify.live/blog/como-fazer-backup-imagens-wordpress">
+<meta property="og:type" content="article">
+{% endblock %}
+{% block schema %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Como Fazer Backup de Todas as Imagens do seu WordPress","datePublished":"2025-01-15","dateModified":"2025-01-15","author":{"@type":"Organization","name":"Digify Scrapper","url":"https://imagescrapper.digify.live"},"publisher":{"@type":"Organization","name":"Digify Scrapper","logo":{"@type":"ImageObject","url":"https://imagescrapper.digify.live/static/logo.webp"}},"description":"Como fazer backup completo das imagens da biblioteca de mídia do WordPress e WooCommerce. Passo a passo gratuito.","mainEntityOfPage":{"@type":"WebPage","@id":"https://imagescrapper.digify.live/blog/como-fazer-backup-imagens-wordpress"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://imagescrapper.digify.live/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://imagescrapper.digify.live/blog"},{"@type":"ListItem","position":3,"name":"Como Fazer Backup de Todas as Imagens do seu WordPress"}]}
+</script>
+{% endblock %}
+{% block breadcrumb %}
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <a href="/">Home</a><span>›</span><a href="/blog">Blog</a><span>›</span><span>Como Fazer Backup de Todas as Imagens do...</span>
+</nav>
+{% endblock %}
+{% block article %}
+<div class="art-tag">WordPress · 4 min de leitura</div>
+<h1>Como Fazer Backup de Todas as Imagens do seu WordPress</h1>
+<div class="art-meta">📅 Janeiro 2025 · por Digify Scrapper · ⏱ 4 min</div>
+
+<p>Perder as imagens do seu WordPress pode ser catastrófico — especialmente para lojas WooCommerce com centenas de fotos de produtos. Neste guia, você aprende como fazer um backup completo de todas as imagens em minutos.</p>
+
+<h2>Por que fazer backup das imagens do WordPress?</h2>
+<ul>
+  <li>Migração de servidor ou hospedagem</li>
+  <li>Proteção contra falhas e hackers</li>
+  <li>Reutilização de imagens em outras plataformas</li>
+  <li>Arquivamento antes de redesign do site</li>
+</ul>
+
+<h2>Método 1: Usando o Digify Scrapper (mais rápido)</h2>
+<p>O jeito mais simples é usar o <strong>Digify Scrapper</strong>. Ele varre todo o seu site WordPress automaticamente e baixa todas as imagens da biblioteca de mídia em um ZIP.</p>
+<ol>
+  <li>Acesse <strong>imagescrapper.digify.live</strong></li>
+  <li>Digite a URL do seu site WordPress</li>
+  <li>Selecione profundidade <strong>3</strong> para garantir que todas as páginas sejam varridas</li>
+  <li>Clique em <strong>Iniciar Scraping</strong></li>
+  <li>Baixe o ZIP com todas as imagens</li>
+</ol>
+
+<div class="cta-box">
+  <p>💾 Faça o backup das suas imagens agora — grátis</p>
+  <a href="/">Abrir Digify Scrapper</a>
+</div>
+
+<h2>Método 2: FTP / File Manager</h2>
+<p>Acesse seu servidor via FTP e baixe a pasta completa <code>wp-content/uploads/</code>. Esta pasta contém todas as imagens e miniaturas geradas pelo WordPress.</p>
+
+<h2>Método 3: Plugin de Backup</h2>
+<p>Plugins como <strong>UpdraftPlus</strong> e <strong>BackWPup</strong> fazem backup automático incluindo a biblioteca de mídia. É a solução mais robusta para backups recorrentes.</p>
+
+<h2>Dicas importantes</h2>
+<ul>
+  <li>Faça backup regularmente — idealmente semanal</li>
+  <li>Armazene o backup em local externo (Google Drive, Dropbox)</li>
+  <li>Inclua o banco de dados além das imagens</li>
+  <li>Teste a restauração periodicamente</li>
+</ul>
+
+<h2>WooCommerce: atenção especial</h2>
+<p>Lojas WooCommerce podem ter centenas de fotos de produtos. Use o Digify Scrapper com profundidade 3-4 para garantir que as imagens de todas as páginas de produto sejam capturadas.</p>
+{% endblock %}
+{% block related %}
+<div class="related">
+  <h3>📚 Artigos relacionados</h3>
+  <a href="/blog/como-baixar-imagens-de-sites">Como Baixar Todas as Imagens de um Site</a>
+  <a href="/blog/o-que-e-image-scraping">O que é Image Scraping?</a>
+  <a href="/blog/melhores-ferramentas-download-imagens">Melhores Ferramentas de Download</a>
+  <a href="/blog/image-scraping-python">Image Scraping com Python</a>
+</div>
+{% endblock %}

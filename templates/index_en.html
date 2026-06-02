@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Digify Scrapper — Download All Images from Any Website for Free{% endblock %}
+{% block canonical %}<link rel="canonical" href="https://imagescrapper.digify.live/en/">{% endblock %}
+{% block hreflang %}
+<link rel="alternate" hreflang="pt-BR" href="https://imagescrapper.digify.live/">
+<link rel="alternate" hreflang="en" href="https://imagescrapper.digify.live/en/">
+<link rel="alternate" hreflang="x-default" href="https://imagescrapper.digify.live/en/">
+{% endblock %}
+{% block meta %}
+<meta name="description" content="Free online tool to download all images from any website in one click. Bulk image downloader, image scraper — no install required. Export as ZIP.">
+<meta name="keywords" content="image scraper, bulk image downloader, download all images from website, image downloader online, web scraper images, free image scraper, download images from site">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="Digify Scrapper — Download All Images from Any Website">
+<meta property="og:description" content="Free online bulk image downloader. Paste URL, click start, download ZIP with all images found. No signup, no install.">
+<meta property="og:url" content="https://imagescrapper.digify.live/en/">
+<meta property="og:type" content="website">
+{% endblock %}
+{% block schema %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Digify Scrapper","url":"https://imagescrapper.digify.live/en/","description":"Free online tool to download all images from any website as a ZIP file.","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"en","isAccessibleForFree":true,"featureList":["Bulk image download","Automatic website crawling","ZIP export","No installation required","Supports JPG PNG GIF WEBP SVG AVIF"]}
+</script>
+{% endblock %}
+{% block extra_style %}
+/* Same styles as PT version — override text only */
+.en-hero{text-align:center;padding:40px 24px 20px;max-width:700px;margin:0 auto}
+.en-hero h1{font-size:28px;color:var(--purple);font-weight:800;margin-bottom:12px;line-height:1.3}
+.en-hero p{font-size:15px;color:var(--dim);max-width:500px;margin:0 auto 24px}
+.en-hero a{background:linear-gradient(135deg,var(--purple),#6a2aaa);color:#fff;padding:13px 32px;border-radius:10px;text-decoration:none;font-weight:800;font-size:16px;display:inline-block}
+.en-features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:700px;margin:32px auto;padding:0 24px}
+@media(max-width:640px){.en-features{grid-template-columns:1fr;padding:0 16px}}
+.en-feat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.en-feat .icon{font-size:28px;margin-bottom:10px}
+.en-feat h3{font-size:14px;color:var(--purple);margin-bottom:6px;font-weight:700}
+.en-feat p{font-size:12px;color:var(--dim);line-height:1.6}
+.en-lang{text-align:center;padding:16px;font-size:13px;color:var(--dim)}
+.en-lang a{color:var(--purple);font-weight:600;text-decoration:none}
+{% endblock %}
+{% block content %}
+<div class="en-hero">
+  <div class="en-lang">🇧🇷 <a href="/">Ver em Português</a></div>
+  <h1>Download All Images from Any Website — Free</h1>
+  <p>Paste a URL, set crawl depth, click start. Get a ZIP with every image found. No signup, no install.</p>
+  <a href="/#scraper">⬇ Start Scraping — It's Free</a>
+</div>
+
+<div class="en-features">
+  <div class="en-feat"><div class="icon">🌐</div><h3>Any Website</h3><p>Crawls entire sites automatically, following internal links up to 4 levels deep.</p></div>
+  <div class="en-feat"><div class="icon">📦</div><h3>ZIP Export</h3><p>All images downloaded and packaged in a single organized ZIP file.</p></div>
+  <div class="en-feat"><div class="icon">⚡</div><h3>Real-time</h3><p>Watch images being found live as the scraper crawls each page.</p></div>
+  <div class="en-feat"><div class="icon">🖼️</div><h3>All Formats</h3><p>JPG, PNG, GIF, WEBP, SVG, AVIF, BMP, ICO — all detected automatically.</p></div>
+  <div class="en-feat"><div class="icon">🔄</div><h3>Auto Retry</h3><p>Failed downloads are retried automatically. Manual retry button for remaining errors.</p></div>
+  <div class="en-feat"><div class="icon">🆓</div><h3>100% Free</h3><p>No account, no credit card, no limits. Open the page and start downloading.</p></div>
+</div>
+
+<!-- Redirect to PT tool with English UI note -->
+<div style="max-width:700px;margin:0 auto 40px;padding:0 24px;text-align:center">
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px">
+    <p style="font-size:14px;color:var(--dim);margin-bottom:16px">The scraping tool works in any language — the interface is currently in Portuguese. English UI coming soon.</p>
+    <a href="/" style="background:var(--purple);color:#fff;padding:11px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px">Open the Tool →</a>
+  </div>
+</div>
+
+<!-- EN Blog preview -->
+<div style="max-width:700px;margin:0 auto 40px;padding:0 24px">
+  <h2 style="font-size:18px;color:var(--purple);margin-bottom:16px;font-weight:700">📝 Learn More</h2>
+  <div style="display:grid;gap:12px">
+    <a href="/blog/como-baixar-imagens-de-sites" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;text-decoration:none;color:var(--fg);display:flex;gap:14px;align-items:center">
+      <span style="font-size:24px">🖼️</span>
+      <div><strong style="font-size:14px">How to Download All Images from a Website</strong><br><span style="font-size:12px;color:var(--dim)">Step-by-step guide — 5 min read</span></div>
+    </a>
+    <a href="/blog/o-que-e-image-scraping" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;text-decoration:none;color:var(--fg);display:flex;gap:14px;align-items:center">
+      <span style="font-size:24px">🤖</span>
+      <div><strong style="font-size:14px">What is Image Scraping? Complete Guide</strong><br><span style="font-size:12px;color:var(--dim)">Concepts & tools — 7 min read</span></div>
+    </a>
+  </div>
+</div>
+{% endblock %}

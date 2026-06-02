@@ -1,0 +1,88 @@
+{% extends "artigo_base.html" %}
+{% block title %}O que é Image Scraping? Guia Completo para Iniciantes — Digify Scrapper{% endblock %}
+{% block canonical %}<link rel="canonical" href="https://imagescrapper.digify.live/blog/o-que-e-image-scraping">{% endblock %}
+{% block meta %}
+<meta name="description" content="Entenda o que é image scraping, como funciona, usos legítimos e ferramentas. Guia completo para iniciantes.">
+<meta name="author" content="Digify Scrapper">
+<meta property="og:title" content="O que é Image Scraping? Guia Completo para Iniciantes">
+<meta property="og:description" content="Entenda o que é image scraping, como funciona, usos legítimos e ferramentas. Guia completo para iniciantes.">
+<meta property="og:url" content="https://imagescrapper.digify.live/blog/o-que-e-image-scraping">
+<meta property="og:type" content="article">
+{% endblock %}
+{% block schema %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"O que é Image Scraping? Guia Completo para Iniciantes","datePublished":"2025-01-15","dateModified":"2025-01-15","author":{"@type":"Organization","name":"Digify Scrapper","url":"https://imagescrapper.digify.live"},"publisher":{"@type":"Organization","name":"Digify Scrapper","logo":{"@type":"ImageObject","url":"https://imagescrapper.digify.live/static/logo.webp"}},"description":"Entenda o que é image scraping, como funciona, usos legítimos e ferramentas. Guia completo para iniciantes.","mainEntityOfPage":{"@type":"WebPage","@id":"https://imagescrapper.digify.live/blog/o-que-e-image-scraping"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://imagescrapper.digify.live/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://imagescrapper.digify.live/blog"},{"@type":"ListItem","position":3,"name":"O que é Image Scraping? Guia Completo para Iniciantes"}]}
+</script>
+{% endblock %}
+{% block breadcrumb %}
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <a href="/">Home</a><span>›</span><a href="/blog">Blog</a><span>›</span><span>O que é Image Scraping? Guia Completo pa...</span>
+</nav>
+{% endblock %}
+{% block article %}
+<div class="art-tag">Conceitos · 7 min de leitura</div>
+<h1>O que é Image Scraping? Guia Completo para Iniciantes</h1>
+<div class="art-meta">📅 Janeiro 2025 · por Digify Scrapper · ⏱ 7 min</div>
+
+<p><strong>Image scraping</strong> é o processo automatizado de extração de imagens de páginas da web. Em vez de baixar cada foto manualmente, um scraper percorre as páginas de um site, encontra todas as URLs de imagens e faz o download em massa.</p>
+
+<h2>Como funciona o image scraping?</h2>
+<p>O processo tem três etapas principais:</p>
+<ol>
+  <li><strong>Crawling:</strong> O scraper acessa a URL inicial e segue os links internos do site, como um robô do Google</li>
+  <li><strong>Parsing:</strong> Em cada página, o scraper analisa o HTML e extrai todas as URLs de imagens encontradas em tags <code>&lt;img&gt;</code>, <code>srcset</code>, <code>data-src</code> e CSS</li>
+  <li><strong>Download:</strong> As imagens são baixadas e organizadas, geralmente em um arquivo ZIP</li>
+</ol>
+
+<h2>Usos legítimos do image scraping</h2>
+<ul>
+  <li><strong>Backup:</strong> Salvar imagens do seu próprio site antes de uma migração</li>
+  <li><strong>Machine Learning:</strong> Criar datasets de imagens para treinar modelos de IA</li>
+  <li><strong>Pesquisa acadêmica:</strong> Coletar imagens para estudos científicos</li>
+  <li><strong>Design:</strong> Reunir referências visuais de forma organizada</li>
+  <li><strong>Monitoramento:</strong> Verificar se imagens de sua propriedade estão sendo usadas indevidamente</li>
+</ul>
+
+<h2>Image scraping é legal?</h2>
+<p>A legalidade do image scraping depende do uso e do conteúdo. Baixar imagens de <strong>domínio público</strong> ou do seu próprio site é totalmente legal. Já baixar imagens protegidas por direitos autorais para uso comercial sem autorização é ilegal.</p>
+<p>Sempre verifique os <strong>Termos de Serviço</strong> do site antes de fazer scraping e respeite o arquivo <code>robots.txt</code>.</p>
+
+<div class="cta-box">
+  <p>🤖 Experimente o image scraping na prática — é grátis</p>
+  <a href="/">Usar o Digify Scrapper</a>
+</div>
+
+<h2>Técnicas de detecção de imagens</h2>
+<p>Um bom scraper detecta imagens em múltiplos lugares do HTML:</p>
+<ul>
+  <li><code>&lt;img src="..."&gt;</code> — tag padrão</li>
+  <li><code>&lt;img srcset="..."&gt;</code> — imagens responsivas</li>
+  <li><code>data-src</code>, <code>data-lazy-src</code> — lazy loading</li>
+  <li><code>background-image: url(...)</code> — CSS inline</li>
+  <li><code>&lt;source&gt;</code> dentro de <code>&lt;picture&gt;</code></li>
+</ul>
+
+<h2>Ferramentas de image scraping</h2>
+<p>As principais opções disponíveis em 2025:</p>
+<ul>
+  <li><strong>Digify Scrapper</strong> — online, gratuito, sem instalação, ZIP automático</li>
+  <li><strong>Python + BeautifulSoup</strong> — para desenvolvedores que precisam de personalização</li>
+  <li><strong>Scrapy</strong> — framework Python para scraping avançado</li>
+  <li><strong>Extensões de navegador</strong> — simples, mas limitadas a uma página por vez</li>
+</ul>
+
+<h2>Conclusão</h2>
+<p>O image scraping é uma técnica poderosa quando usada de forma ética e responsável. Para a maioria dos usuários, uma ferramenta online como o Digify Scrapper resolve o problema sem necessidade de código ou configurações complexas.</p>
+{% endblock %}
+{% block related %}
+<div class="related">
+  <h3>📚 Artigos relacionados</h3>
+  <a href="/blog/como-baixar-imagens-de-sites">Como Baixar Todas as Imagens de um Site</a>
+  <a href="/blog/o-que-e-image-scraping">O que é Image Scraping?</a>
+  <a href="/blog/melhores-ferramentas-download-imagens">Melhores Ferramentas de Download</a>
+  <a href="/blog/image-scraping-python">Image Scraping com Python</a>
+</div>
+{% endblock %}

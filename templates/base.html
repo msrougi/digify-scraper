@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{% block title %}Digify Scrapper — Baixe Todas as Imagens de Qualquer Site{% endblock %}</title>
+{% block meta %}{% endblock %}
+
+<!-- Canonical -->
+{% block canonical %}<link rel="canonical" href="https://imagescrapper.digify.live/">{% endblock %}
+<!-- hreflang — versões de idioma -->
+{% block hreflang %}
+<link rel="alternate" hreflang="pt-BR" href="https://imagescrapper.digify.live/">
+<link rel="alternate" hreflang="en" href="https://imagescrapper.digify.live/en/">
+<link rel="alternate" hreflang="x-default" href="https://imagescrapper.digify.live/en/">
+{% endblock %}
+
+<!-- Open Graph padrão -->
+<meta property="og:site_name" content="Digify Scrapper">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://imagescrapper.digify.live/static/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://imagescrapper.digify.live/static/og-image.jpg">
+
+<!-- Preconnect para performance -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://pagead2.googlesyndication.com">
+
+<!-- Google AdSense — descomente após aprovação -->
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+
+<!-- Schema.org Organization -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Digify Scrapper",
+  "url": "https://imagescrapper.digify.live",
+  "logo": "https://imagescrapper.digify.live/static/logo.webp",
+  "sameAs": [],
+  "contactPoint": {"@type": "ContactPoint","email": "contato@digify.live","contactType": "customer support"}
+}
+</script>
+
+<!-- Schema.org WebSite com SearchAction -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Digify Scrapper",
+  "url": "https://imagescrapper.digify.live",
+  "description": "Ferramenta gratuita para baixar todas as imagens de qualquer site em um clique.",
+  "inLanguage": "pt-BR",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://imagescrapper.digify.live/blog?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+{% block schema %}{% endblock %}
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --purple:#380e76;--purple2:#280a56;--purple-light:#6a2aaa;
+  --bg:#f4f4f8;--card:#fff;--card2:#f0eef8;--border:#d0c8e8;
+  --fg:#1a1030;--dim:#7a6a9a;--green:#2a7a48;--red:#e05c5c;
+  --shadow:0 2px 16px rgba(56,14,118,.10);
+}
+body{background:var(--bg);color:var(--fg);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column}
+
+/* NAV */
+nav{background:var(--purple);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(56,14,118,.35)}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-logo img{height:34px}
+.nav-logo span{color:#fff;font-weight:800;font-size:17px;letter-spacing:1px}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:rgba(255,255,255,.8);text-decoration:none;font-size:13px;font-weight:500;transition:color .15s;padding:4px 0;border-bottom:2px solid transparent}
+.nav-links a:hover{color:#fff;border-bottom-color:rgba(255,255,255,.4)}
+
+/* BREADCRUMB */
+.breadcrumb{max-width:900px;margin:16px auto 0;padding:0 24px;font-size:12px;color:var(--dim)}
+.breadcrumb a{color:var(--purple);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.breadcrumb span{margin:0 6px;color:var(--border)}
+
+/* ADSENSE SLOTS */
+.ad-slot{background:var(--card2);border:1px dashed var(--border);border-radius:8px;padding:16px;text-align:center;color:var(--dim);font-size:11px}
+.ad-leaderboard{height:90px;display:flex;align-items:center;justify-content:center;max-width:900px;margin:12px auto;width:calc(100% - 48px)}
+.ad-rectangle{min-height:250px;display:flex;align-items:center;justify-content:center}
+
+/* FOOTER */
+footer{background:var(--purple);color:rgba(255,255,255,.7);padding:40px 24px 24px;margin-top:auto}
+.footer-inner{max-width:900px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;margin-bottom:32px}
+.footer-col h4{color:#fff;font-size:12px;margin-bottom:14px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700}
+.footer-col p{color:rgba(255,255,255,.55);font-size:12px;line-height:1.8}
+.footer-col a{color:rgba(255,255,255,.6);font-size:12px;line-height:2.2;text-decoration:none;display:block}
+.footer-col a:hover{color:#fff}
+.footer-bottom{text-align:center;font-size:11px;color:rgba(255,255,255,.35);border-top:1px solid rgba(255,255,255,.1);padding-top:20px;line-height:1.8}
+.footer-bottom a{color:rgba(255,255,255,.5);text-decoration:none}
+.footer-bottom a:hover{color:#fff}
+
+/* UTILS */
+/* ── HAMBURGER MENU ── */
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none}
+.nav-hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all .25s}
+.nav-hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.nav-hamburger.open span:nth-child(2){opacity:0}
+.nav-hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.nav-mobile{display:none;position:absolute;top:60px;left:0;right:0;background:var(--purple);flex-direction:column;padding:8px 0;box-shadow:0 8px 24px rgba(0,0,0,.3);z-index:99}
+.nav-mobile.open{display:flex}
+.nav-mobile a{color:rgba(255,255,255,.85);text-decoration:none;font-size:15px;font-weight:500;padding:14px 32px;border-bottom:1px solid rgba(255,255,255,.08)}
+.nav-mobile a:hover{background:rgba(255,255,255,.08);color:#fff}
+
+/* ── RESPONSIVE BREAKPOINTS ── */
+@media(max-width:640px){
+  nav{padding:0 16px;position:relative}
+  .nav-links{display:none}
+  .nav-hamburger{display:flex}
+  .nav-logo span{font-size:15px}
+  .footer-grid{grid-template-columns:1fr;gap:24px}
+  .ad-leaderboard{height:60px;margin:8px 16px;width:calc(100% - 32px)}
+  .breadcrumb{padding:0 16px;font-size:11px}
+}
+</style>
+{% block extra_style %}{% endblock %}
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">
+    <img src="/static/logo.webp" alt="Digify Scrapper — Image Scraper" width="34" height="34">
+    <span>Digify Scrapper</span>
+  </a>
+  <div class="nav-links">
+    <a href="/">⬇ Scraper</a>
+    <a href="/blog">📝 Blog</a>
+    <a href="/contato">Contato</a>
+    <a href="/privacidade">Privacidade</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <a href="/">⬇ Scraper</a>
+  <a href="/blog">📝 Blog</a>
+  <a href="/contato">Contato</a>
+  <a href="/privacidade">Privacidade</a>
+</div>
+
+{% block breadcrumb %}{% endblock %}
+
+<!-- AdSense Leaderboard Topo -->
+<div class="ad-leaderboard ad-slot">
+  <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXX" data-ad-slot="XXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script> -->
+  Publicidade — 728×90
+</div>
+
+{% block content %}{% endblock %}
+
+<!-- AdSense Leaderboard Rodapé -->
+<div class="ad-leaderboard ad-slot">
+  <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXX" data-ad-slot="XXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script> -->
+  Publicidade — 728×90
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Digify Scrapper</h4>
+        <p>Ferramenta gratuita para baixar todas as imagens de qualquer site em um clique. Sem cadastro, sem instalação.</p>
+        <p style="margin-top:10px">Uma ferramenta da <a href="https://digify.live" target="_blank" rel="dofollow" style="color:rgba(255,255,255,.85);font-weight:700">Digify</a> — soluções digitais para o seu negócio.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Ferramentas</h4>
+        <a href="/">Image Scraper Online</a>
+        <a href="/blog">Blog & Tutoriais</a>
+        <a href="/contato">Contato</a>
+        <a href="https://digify.live" target="_blank" rel="dofollow">🌐 Digify.live</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="/privacidade">Política de Privacidade</a>
+        <a href="/termos">Termos de Uso</a>
+        <a href="/sitemap.xml">Sitemap</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 <a href="https://digify.live" target="_blank" rel="dofollow">Digify</a> · Digify Scrapper · <a href="https://digify.live" target="_blank" rel="dofollow">digify.live</a> · Todos os direitos reservados</p>
+      <p style="margin-top:6px">
+        <a href="/blog/como-baixar-imagens-de-sites">Como baixar imagens</a> ·
+        <a href="/blog/o-que-e-image-scraping">O que é image scraping</a> ·
+        <a href="/blog/melhores-ferramentas-download-imagens">Melhores ferramentas</a> ·
+        <a href="/blog/image-scraping-python">Scraping com Python</a>
+      </p>
+      <p style="margin-top:10px;font-size:12px">
+        Feito com ❤️ por <a href="https://digify.live" target="_blank" rel="dofollow" style="color:rgba(255,255,255,.7);font-weight:600">Digify</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+{% block scripts %}{% endblock %}
+<script>
+function toggleMenu(){
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('nav-mobile').classList.toggle('open');
+}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('nav') && !e.target.closest('#nav-mobile')){
+    document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('nav-mobile').classList.remove('open');
+  }
+});
+</script>
+</body>
+</html>

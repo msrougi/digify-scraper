@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Blog — Dicas sobre Image Scraping e Download de Imagens em Massa{% endblock %}
+{% block canonical %}<link rel="canonical" href="https://imagescrapper.digify.live/blog">{% endblock %}
+{% block meta %}
+<meta name="description" content="Blog com tutoriais, guias e dicas sobre como baixar imagens de sites, image scraping, ferramentas gratuitas e muito mais.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Blog — Dicas sobre Image Scraping e Download de Imagens">
+<meta property="og:description" content="Tutoriais e guias sobre como baixar imagens de sites, image scraping e ferramentas gratuitas.">
+<meta property="og:url" content="https://imagescrapper.digify.live/blog">
+{% endblock %}
+{% block schema %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Blog","name":"Blog Digify Scrapper","url":"https://imagescrapper.digify.live/blog","description":"Tutoriais e guias sobre image scraping e download de imagens","inLanguage":"pt-BR","publisher":{"@type":"Organization","name":"Digify Scrapper","logo":"https://imagescrapper.digify.live/static/logo.webp"}}
+</script>
+{% endblock %}
+{% block breadcrumb %}
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <a href="/">Home</a><span>›</span><span>Blog</span>
+</nav>
+{% endblock %}
+{% block extra_style %}
+.blog-wrap{max-width:900px;margin:32px auto;padding:0 24px}
+.blog-hero{text-align:center;margin-bottom:36px}
+.blog-hero h1{font-size:28px;color:var(--purple);margin-bottom:10px;font-weight:800}
+.blog-hero p{font-size:15px;color:var(--dim);max-width:560px;margin:0 auto}
+.articles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+@media(max-width:700px){
+  .blog-wrap{padding:0 16px;margin:16px auto}
+  .blog-hero h1{font-size:22px}
+  .articles{grid-template-columns:1fr}
+}
+@media(max-width:900px) and (min-width:700px){.articles{grid-template-columns:1fr 1fr}}
+.article-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:box-shadow .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;color:inherit;box-shadow:var(--shadow)}
+.article-card:hover{box-shadow:0 6px 28px rgba(56,14,118,.18);transform:translateY(-2px)}
+.article-thumb{background:linear-gradient(135deg,var(--purple),var(--purple-light));height:120px;display:flex;align-items:center;justify-content:center;font-size:42px}
+.article-body{padding:18px;flex:1;display:flex;flex-direction:column}
+.article-tag{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--purple);font-weight:700;margin-bottom:8px}
+.article-body h2{font-size:15px;color:var(--fg);margin-bottom:8px;line-height:1.4;flex:1}
+.article-body p{font-size:12px;color:var(--dim);line-height:1.7}
+.article-meta{font-size:11px;color:var(--dim);margin-top:12px;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between}
+.read-more{font-size:12px;color:var(--purple);font-weight:600;text-decoration:none;margin-top:10px;display:inline-block}
+{% endblock %}
+{% block content %}
+<div class="blog-wrap">
+  <div class="blog-hero">
+    <h1>Blog — Image Scraping & Download de Imagens</h1>
+    <p>Tutoriais práticos, comparativos e guias para baixar imagens da web com eficiência</p>
+  </div>
+
+  <div class="articles">
+    <a class="article-card" href="/blog/como-baixar-imagens-de-sites">
+      <div class="article-thumb">🖼️</div>
+      <div class="article-body">
+        <div class="article-tag">Tutorial</div>
+        <h2>Como Baixar Todas as Imagens de um Site de Uma Vez</h2>
+        <p>Guia completo para download em massa de imagens, sem instalar nada.</p>
+        <div class="article-meta"><span>📅 Jan 2025</span><span>⏱ 5 min</span></div>
+      </div>
+    </a>
+    <a class="article-card" href="/blog/o-que-e-image-scraping">
+      <div class="article-thumb">🤖</div>
+      <div class="article-body">
+        <div class="article-tag">Conceitos</div>
+        <h2>O que é Image Scraping? Guia Completo para Iniciantes</h2>
+        <p>Entenda como funciona e quais os usos legítimos do web scraping de imagens.</p>
+        <div class="article-meta"><span>📅 Jan 2025</span><span>⏱ 7 min</span></div>
+      </div>
+    </a>
+    <a class="article-card" href="/blog/melhores-ferramentas-download-imagens">
+      <div class="article-thumb">🛠️</div>
+      <div class="article-body">
+        <div class="article-tag">Comparativo</div>
+        <h2>As 5 Melhores Ferramentas para Download de Imagens em Massa 2025</h2>
+        <p>Comparamos as principais ferramentas gratuitas e pagas do mercado.</p>
+        <div class="article-meta"><span>📅 Jan 2025</span><span>⏱ 6 min</span></div>
+      </div>
+    </a>
+    <a class="article-card" href="/blog/como-fazer-backup-imagens-wordpress">
+      <div class="article-thumb">💾</div>
+      <div class="article-body">
+        <div class="article-tag">WordPress</div>
+        <h2>Como Fazer Backup de Todas as Imagens do seu WordPress</h2>
+        <p>Passo a passo para salvar toda a biblioteca de mídia do WordPress e WooCommerce.</p>
+        <div class="article-meta"><span>📅 Jan 2025</span><span>⏱ 4 min</span></div>
+      </div>
+    </a>
+    <a class="article-card" href="/blog/image-scraping-python">
+      <div class="article-thumb">🐍</div>
+      <div class="article-body">
+        <div class="article-tag">Programação</div>
+        <h2>Image Scraping com Python: Guia Prático com Exemplos</h2>
+        <p>Crie seu próprio scraper de imagens com Python, requests e BeautifulSoup.</p>
+        <div class="article-meta"><span>📅 Jan 2025</span><span>⏱ 10 min</span></div>
+      </div>
+    </a>
+    <a class="article-card" href="/blog/direitos-autorais-scraping-imagens">
+      <div class="article-thumb">⚖️</div>
+      <div class="article-body">
+        <div class="article-tag">Legal</div>
+        <h2>É Legal Baixar Imagens de Sites? Direitos Autorais e Scraping</h2>
+        <p>O que é permitido, o que é proibido e como usar imagens corretamente.</p>
+        <div class="article-meta"><span>📅 Jan 2025</span><span>⏱ 8 min</span></div>
+      </div>
+    </a>
+  </div>
+</div>
+{% endblock %}
